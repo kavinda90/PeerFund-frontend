@@ -5,52 +5,98 @@ import {
 } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { useConfigStore } from "@/stores/config";
+import { defineComponent } from "vue";
 
 const investorRoutes = [
   {
-    path: "/investor-dashboard",
-    name: "investor-dashboard",
-    component: () => import("@/views/investor/Dashboard.vue"),
+    path: "/investor",
+    name: "/investor/dashboard",
+    component: () => import("@/layouts/main-layout/investor/InvestorLayout.vue"),
     meta: {
-      pageTitle: "Investor Dashboard",
-      breadcrumbs: ["Dashboards"],
       allowedUserTypes: ["investor"],
     },
+    children: [
+      {
+        path: "dashboard",
+        name: "investor-dashboard",
+        component: () => import("@/views/investor/Dashboard.vue"),
+        meta: {
+          pageTitle: "Dashboard",
+          breadcrumbs: ["Dashboard"],
+        },
+      },
+      {
+        path: "invest",
+        name: "invest",
+        component: () => import("@/views/investor/Invest.vue"),
+        meta: {
+          pageTitle: "Invest",
+          breadcrumbs: ["Invest"],
+        },
+      },
+      {
+        path: "portfolio",
+        name: "portfolio",
+        component: () => import("@/views/investor/Portfolio.vue"),
+        meta: {
+          pageTitle: "My Portfolio",
+          breadcrumbs: ["Portfolio"],
+        },
+      },
+      {
+        path: "transfer-funds",
+        name: "transfer-funds",
+        component: () => import("@/views/investor/TransferFunds.vue"),
+        meta: {
+          pageTitle: "Transfer Funds",
+          breadcrumbs: ["Transfer-Funds"],
+        },
+      },
+      {
+        path: "account",
+        name: "Account",
+        component: () => import("@/views/investor/Account.vue"),
+        meta: {
+          pageTitle: "My Account",
+          breadcrumbs: ["My-Account"],
+        },
+      },
+    ]
   },
 ];
 
 const borrowerRoutes = [
   {
-    path: "/borrower-dashboard",
-    name: "borrower-dashboard",
-    component: () => import("@/views/borrower/Dashboard.vue"),
+    path: "/borrower",
+    redirect: "/borrower/dashboard",
+    component: () => import("@/layouts/main-layout/borrower/BorrowerLayout.vue"),
     meta: {
-      pageTitle: "Investor Dashboard",
-      breadcrumbs: ["Dashboards"],
       allowedUserTypes: ["borrower"],
     },
+    children: [
+      {
+        path: "dashboard",
+        name: "borrower-dashboard",
+        component: () => import("@/views/borrower/Dashboard.vue"),
+        meta: {
+          pageTitle: "Dashboard",
+          breadcrumbs: ["Dashboard"],
+        },
+      },
+    ]
   },
 ];
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/dashboard",
+    redirect: "/sign-in",
     component: () => import("@/layouts/main-layout/MainLayout.vue"),
     meta: {
       middleware: "auth",
       allowedUserTypes: ["investor", "borrower"],
     },
     children: [
-      // {
-      //   path: "/dashboard",
-      //   name: "dashboard",
-      //   component: () => import("@/views/Dashboard.vue"),
-      //   meta: {
-      //     pageTitle: "Dashboard",
-      //     breadcrumbs: ["Dashboards"],
-      //   },
-      // },
       ...investorRoutes,
       ...borrowerRoutes,
     ],
@@ -131,7 +177,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   const configStore = useConfigStore();
   
@@ -142,26 +188,32 @@ router.beforeEach((to, from, next) => {
   // reset config to initial state
   configStore.resetLayoutConfig();
 
-  // verify auth token before each page change
-  authStore.verifyAuth();
+  try {
+    // verify auth token before each page change
+    await authStore.verifyAuth();
 
-  // before page access check if page requires authentication
-  if (to.meta.middleware == "auth") {
-    if (authStore.isAuthenticated) {
-      if (
-        !to.meta.allowedUserTypes ||
-        to.meta.allowedUserTypes.includes(authStore.user.user_type)
-      ) {
-        next();
-      } else {
-        // Redirect to 404 if user type is not allowed for this route
+    // before page access check if page requires authentication
+    if (to.meta.middleware == "auth") {
+      if (authStore.isAuthenticated) {
+        if (
+          !to.meta.allowedUserTypes ||
+          to.meta.allowedUserTypes.includes(authStore.user.user_type)
+        ) {
+          next();
+        } else {
+          // Redirect to 404 if user type is not allowed for this route
           next({ name: "404" });
+        }
+      } else {
+        next({ name: "sign-in" });
       }
     } else {
-      next({ name: "sign-in" });
+      next();
     }
-  } else {
-    next();
+  } catch (error) {
+    // Handle authentication verification error
+    console.error("Authentication verification error:", error);
+    next({ name: "sign-in" });
   }
 
   // Scroll page to top on every route change

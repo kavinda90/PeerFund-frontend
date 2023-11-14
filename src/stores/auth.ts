@@ -1,20 +1,8 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import ApiService from "@/core/services/ApiService";
+import type { User } from "@/core/services/Models";
 import JwtService from "@/core/services/JwtService";
-
-export interface User {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  dob: Date;
-  user_type: string;
-  status: boolean;
-  phone: string;
-  image_path: string;
-  payment_method: string;
-}
 
 export const useAuthStore = defineStore("auth", () => {
   const errors = ref({});
@@ -39,52 +27,56 @@ export const useAuthStore = defineStore("auth", () => {
     JwtService.destroyToken();
   }
 
-  function login(credentials: User) {
-    return ApiService.post("users/login", credentials)
-      .then(({ data }) => {
-        setAuth(data);
-      })
-      .catch(({ response }) => {
-        setError(response.data.errors);
-      });
+  async function login(credentials: User) {
+    try {
+      const { data } = await ApiService.post("users/login", credentials);
+      setAuth(data);
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   function logout() {
     purgeAuth();
   }
 
-  function register(credentials: User) {
-    return ApiService.post("users/sign-up", credentials)
-      .then(({ data }) => {
-        setAuth(data);
-      })
-      .catch(({ response }) => {
-        setError(response.data.errors);
-      });
+  async function register(credentials: User) {
+    try {
+      const { data } = await ApiService.post("users/sign-up", credentials);
+      setAuth(data);
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
-  function forgotPassword(email: string) {
-    return ApiService.post("forgot_password", email)
-      .then(() => {
-        setError({});
-      })
-      .catch(({ response }) => {
-        setError(response.data.errors);
-      });
+  async function forgotPassword(email: string) {
+    try {
+      await ApiService.post("forgot_password", email);
+      setError({});
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
-  function verifyAuth() {
-    if (JwtService.getToken()) {
-      ApiService.setHeader();
-      ApiService.post("users/verify_token", { api_token: JwtService.getToken() })
-        .then(({ data }) => {
-          setAuth(data);
-        })
-        .catch(({ response }) => {
-          setError(response.data.errors);
-          purgeAuth();
+  async function verifyAuth() {
+    try {
+      if (JwtService.getToken()) {
+        ApiService.setHeader();
+        const { data } = await ApiService.post("users/verify_token", {
+          api_token: JwtService.getToken(),
         });
-    } else {
+        setAuth(data);
+      } else {
+        purgeAuth();
+      }
+    } catch (error) {
+      if (error) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        setError(error.message);
+      }
+  
+      // Always purge auth on error
       purgeAuth();
     }
   }

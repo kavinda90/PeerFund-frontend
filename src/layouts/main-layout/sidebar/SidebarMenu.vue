@@ -163,7 +163,9 @@
 import { getAssetPath } from "@/core/helpers/assets";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import MainMenuConfig from "@/core/config/CleanMainMenuConfig";
+import InvestorMenuConfig from "@/core/config/InvestorMainMenuConfig";
+import BorrowerMenuConfig from "@/core/config/BorrowerMainMenuConfig";
+import { useAuthStore } from "@/stores/auth";
 import { sidebarMenuIcons } from "@/core/helpers/config";
 import { useI18n } from "vue-i18n";
 
@@ -174,6 +176,8 @@ export default defineComponent({
     const { t, te } = useI18n();
     const route = useRoute();
     const scrollElRef = ref<null | HTMLElement>(null);
+    const authStore = useAuthStore();
+    const MainMenuConfig = (authStore.user.user_type === 'investor') ? InvestorMenuConfig : BorrowerMenuConfig;
 
     onMounted(() => {
       if (scrollElRef.value) {

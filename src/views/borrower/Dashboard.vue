@@ -109,7 +109,7 @@
   import MixedWidget5 from "@/components/widgets/mixed/Widget5.vue";
   
   export default defineComponent({
-    name: "main-dashboard",
+    name: "borrower-dashboard",
     components: {
       Widget1,
       Widget2,

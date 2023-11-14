@@ -11,13 +11,14 @@
         <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
           <!--begin::Content wrapper-->
           <div class="d-flex flex-column flex-column-fluid">
-            <KTToolbar />
+            <InvestorToolbar v-show="userType === 'investor'" />
+            <BorrowerToolbar v-show="userType === 'borrower'" />
             <div id="kt_app_content" class="app-content flex-column-fluid">
               <KTContent></KTContent>
             </div>
           </div>
           <!--end::Content wrapper-->
-          <KTFooter />
+          <!-- <KTFooter /> -->
         </div>
         <!--end:::Main-->
       </div>
@@ -30,7 +31,7 @@
   <KTDrawers />
   <KTScrollTop />
   <KTModals />
-  <KTCustomize />
+  <!-- <KTCustomize /> -->
 </template>
 
 <script lang="ts">
@@ -41,10 +42,13 @@ import {
   onMounted,
   watch,
 } from "vue";
+import { useAuthStore } from "@/stores/auth";
 import KTHeader from "@/layouts/main-layout/header/Header.vue";
 import KTSidebar from "@/layouts/main-layout/sidebar/Sidebar.vue";
 import KTContent from "@/layouts/main-layout/content/Content.vue";
 import KTToolbar from "@/layouts/main-layout/toolbar/Toolbar.vue";
+import InvestorToolbar from "@/layouts/main-layout/toolbar/InvestorToolbar.vue";
+import BorrowerToolbar from "@/layouts/main-layout/toolbar/BorrowerToolbar.vue";
 import KTFooter from "@/layouts/main-layout/footer/Footer.vue";
 import KTDrawers from "@/layouts/main-layout/drawers/Drawers.vue";
 import KTModals from "@/layouts/main-layout/modals/Modals.vue";
@@ -61,6 +65,8 @@ export default defineComponent({
     KTSidebar,
     KTContent,
     KTToolbar,
+    InvestorToolbar,
+    BorrowerToolbar,
     KTFooter,
     KTDrawers,
     KTScrollTop,
@@ -69,6 +75,7 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute();
+    const userType = useAuthStore().user.user_type;
 
     onBeforeMount(() => {
       LayoutService.init();
@@ -88,6 +95,10 @@ export default defineComponent({
         });
       }
     );
+
+    return {
+      userType
+    }
   },
 });
 </script>

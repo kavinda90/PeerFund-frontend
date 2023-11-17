@@ -96,7 +96,7 @@ const investorRoutes = [
           },
         ],
       },
-      
+
     ]
   },
 ];
@@ -216,7 +216,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   const configStore = useConfigStore();
-  
+
 
   // current page view title
   document.title = `${to.meta.pageTitle} - ${import.meta.env.VITE_APP_NAME}`;

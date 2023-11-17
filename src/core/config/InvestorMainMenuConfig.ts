@@ -7,7 +7,7 @@ export interface MenuItem {
     bootstrapIcon?: string;
     sub?: Array<MenuItem>;
   }
-  
+
   const MainMenuConfig: Array<MenuItem> = [
     {
       pages: [
@@ -31,7 +31,7 @@ export interface MenuItem {
         },
         {
             heading: "Transfer Funds",
-            route: "/investor/funds",
+            route: "/investor/transfer-funds",
             keenthemesIcon: "bank",
             bootstrapIcon: "bi-layers",
         },
@@ -50,6 +50,5 @@ export interface MenuItem {
       ]
     }
   ];
-  
+
   export default MainMenuConfig;
-  

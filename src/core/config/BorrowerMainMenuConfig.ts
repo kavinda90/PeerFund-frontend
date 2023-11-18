@@ -7,19 +7,37 @@ export interface MenuItem {
     bootstrapIcon?: string;
     sub?: Array<MenuItem>;
   }
-  
+
   const MainMenuConfig: Array<MenuItem> = [
     {
       pages: [
         {
           heading: "Dashboard",
-          route: "/borrower-dashboard",
-          keenthemesIcon: "element-11",
-          bootstrapIcon: "bi-app-indicator",
+          route: "/borrower/dashboard",
+          keenthemesIcon: "home",
+        },
+        {
+          heading: "Payment Methods",
+          route: "/borrower/payment-methods",
+          keenthemesIcon: "bill",
+        },
+        {
+          heading: "Loan History",
+          route: "/borrower/history",
+          keenthemesIcon: "calendar",
+        },
+        {
+          heading: "Profile",
+          route: "/borrower/profile",
+          keenthemesIcon: "user",
+        },
+        {
+          heading: "sample-dashboard",
+          route: "/borrower/sample-dashboard",
+          keenthemesIcon: "home-1",
         },
       ],
     },
   ];
-  
+
   export default MainMenuConfig;
-  

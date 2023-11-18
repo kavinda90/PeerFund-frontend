@@ -1,11 +1,6 @@
-import {
-  createRouter,
-  createWebHashHistory,
-  type RouteRecordRaw,
-} from "vue-router";
-import { useAuthStore } from "@/stores/auth";
-import { useConfigStore } from "@/stores/config";
-import { defineComponent } from "vue";
+import {createRouter, createWebHashHistory, type RouteRecordRaw,} from "vue-router";
+import {useAuthStore} from "@/stores/auth";
+import {useConfigStore} from "@/stores/config";
 
 const investorRoutes = [
   {
@@ -112,11 +107,56 @@ const borrowerRoutes = [
     children: [
       {
         path: "dashboard",
-        name: "borrower-dashboard",
-        component: () => import("@/views/borrower/Dashboard.vue"),
+        name: "Dashboard",
+        component: () => import("@/views/borrower/BorrowerDashboard.vue"),
         meta: {
           pageTitle: "Dashboard",
           breadcrumbs: ["Dashboard"],
+        },
+      },
+      {
+        path: "payment-methods",
+        name: "Payment Methods",
+        component: () => import("@/views/borrower/Payment.vue"),
+        meta: {
+          pageTitle: "Payment Methods",
+          breadcrumbs: ["Payment Methods"],
+        },
+      },
+      {
+        path: "history",
+        name: "LoanHistory",
+        component: () => import("@/views/borrower/LoanHistory.vue"),
+        meta: {
+          pageTitle: "Loan History",
+          breadcrumbs: ["Loan History"],
+        },
+      },
+      {
+        path: "profile",
+        name: "BorrowerProfile",
+        component: () => import("@/views/borrower/BorrowerProfile.vue"),
+        meta: {
+          pageTitle: "Profile",
+          breadcrumbs: ["Profile"],
+        },
+      },
+      {
+        path: "loans/:id",
+        name: "Loan Details",
+        component: () => import("@/views/borrower/LoanDetails.vue"),
+        meta: {
+          pageTitle: "Loan Details",
+          breadcrumbs: ["Loan History", "Loan Details"],
+        },
+      },
+      {
+        path: "sample-dashboard",
+        name: "Sample-dashboard",
+        component: () => import("@/views/borrower/Dashboard.vue"),
+        meta: {
+          pageTitle: "Sample dashboard",
+          breadcrumbs: ["Sample dashboard"],
         },
       },
     ]

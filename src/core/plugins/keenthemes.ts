@@ -1,5 +1,4 @@
 import {
-  DrawerComponent,
   MenuComponent,
   ScrollComponent,
   StickyComponent,
@@ -20,7 +19,6 @@ const initializeComponents = () => {
     StickyComponent.bootstrap();
     MenuComponent.bootstrap();
     ScrollComponent.bootstrap();
-    DrawerComponent.bootstrap();
     SwapperComponent.bootstrap();
   }, 0);
 };
@@ -37,7 +35,6 @@ const reinitializeComponents = () => {
     reinitializeScrollComponent().then(() => {
       ScrollComponent.updateAll();
     });
-    DrawerComponent.reinitialization();
     SwapperComponent.reinitialization();
   }, 0);
 };

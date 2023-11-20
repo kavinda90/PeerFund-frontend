@@ -37,8 +37,8 @@
 
                 @include menu-link-default-state( 
                     $title-color: $gray-300, 
-                    $icon-color:  #7F8194, 
-                    $bullet-color:#7F8194,  
+                    $icon-color:  #e3e2e2, 
+                    $bullet-color:#e3e2e2,  
                     $arrow-color: var(--#{$prefix}gray-700), 
                     $bg-color: null 
                 );

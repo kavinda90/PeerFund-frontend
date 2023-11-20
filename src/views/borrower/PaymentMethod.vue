@@ -2,13 +2,13 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: "LoanDetails",
+  name: "BankDetails",
   props: ['id'],
 })
 </script>
 
 <template>
-  <div>Loan details for {{ id }}</div>
+<div>Payment method {{id}}</div>
 </template>
 
 <style scoped lang="scss">

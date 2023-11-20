@@ -149,6 +149,17 @@ const borrowerRoutes = [
           pageTitle: "Loan Details",
           breadcrumbs: ["Loan History", "Loan Details"],
         },
+        props: true,
+      },
+      {
+        path: "payment-method/:id",
+        name: "Payment Method",
+        component: () => import("@/views/borrower/PaymentMethod.vue"),
+        meta: {
+          pageTitle: "Payment Method",
+          breadcrumbs: ["Payment Methods", "Payment Method"],
+        },
+        props: true,
       },
       {
         path: "sample-dashboard",
@@ -185,7 +196,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "/sign-in",
         name: "sign-in",
         component: () =>
-          import("@/views/crafted/authentication/basic-flow/SignIn.vue"),
+            import("@/views/crafted/authentication/basic-flow/SignIn.vue"),
         meta: {
           pageTitle: "Sign In",
         },
@@ -194,7 +205,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "/sign-up",
         name: "sign-up",
         component: () =>
-          import("@/views/crafted/authentication/basic-flow/SignUpInvestor.vue"),
+            import("@/views/crafted/authentication/basic-flow/SignUpInvestor.vue"),
         meta: {
           pageTitle: "Sign Up",
         },
@@ -203,7 +214,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "/password-reset",
         name: "password-reset",
         component: () =>
-          import("@/views/crafted/authentication/basic-flow/PasswordReset.vue"),
+            import("@/views/crafted/authentication/basic-flow/PasswordReset.vue"),
         meta: {
           pageTitle: "Password reset",
         },
@@ -214,7 +225,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/multi-step-sign-up",
     name: "multi-step-sign-up",
     component: () =>
-      import("@/views/crafted/authentication/MultiStepSignUp.vue"),
+        import("@/views/crafted/authentication/MultiStepSignUp.vue"),
     meta: {
       pageTitle: "Multi-step Sign up",
     },
@@ -272,16 +283,16 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.middleware == "auth") {
       if (authStore.isAuthenticated) {
         if (
-          !to.meta.allowedUserTypes ||
-          to.meta.allowedUserTypes.includes(authStore.user.user_type)
+            !to.meta.allowedUserTypes ||
+            to.meta.allowedUserTypes.includes(authStore.user.user_type)
         ) {
           next();
         } else {
           // Redirect to 404 if user type is not allowed for this route
-          next({ name: "404" });
+          next({name: "404"});
         }
       } else {
-        next({ name: "sign-in" });
+        next({name: "sign-in"});
       }
     } else {
       next();
@@ -289,7 +300,7 @@ router.beforeEach(async (to, from, next) => {
   } catch (error) {
     // Handle authentication verification error
     console.error("Authentication verification error:", error);
-    next({ name: "sign-in" });
+    next({name: "sign-in"});
   }
 
   // Scroll page to top on every route change

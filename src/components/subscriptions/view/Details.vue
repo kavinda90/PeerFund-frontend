@@ -5,7 +5,7 @@
     <div class="card-header">
       <!--begin::Card title-->
       <div class="card-title">
-        <h2 class="fw-bold">Product Details</h2>
+        <h2 class="fw-bold">Subscription Details</h2>
       </div>
       <!--begin::Card title-->
 
@@ -158,30 +158,6 @@
                 </td>
                 <td>1</td>
                 <td>$149.99 / Year</td>
-                <td class="text-end">
-                  <!--begin::Action-->
-                  <a
-                    href="#"
-                    class="btn btn-icon btn-active-light-primary w-30px h-30px"
-                    data-kt-menu-trigger="click"
-                    data-kt-menu-placement="bottom-end"
-                  >
-                    <KTIcon icon-name="switch" icon-class="fs-3" />
-                  </a>
-                  <UserMenu></UserMenu>
-                  <!--end::Action-->
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label class="w-150px">Pro Bundle</label>
-                  <div class="fw-normal text-gray-400">Basic yearly bundle</div>
-                </td>
-                <td>
-                  <span class="badge badge-light-danger">sub_4567_3433</span>
-                </td>
-                <td>5</td>
-                <td>$949.99 / Year</td>
                 <td class="text-end">
                   <!--begin::Action-->
                   <a

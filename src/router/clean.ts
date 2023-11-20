@@ -44,7 +44,7 @@ const investorRoutes = [
         },
       },
       {
-        path: "transfer-funds",
+        path: "funds",
         name: "transfer-funds",
         component: () => import("@/views/investor/TransferFunds.vue"),
         meta: {
@@ -53,14 +53,50 @@ const investorRoutes = [
         },
       },
       {
-        path: "account",
-        name: "Account",
+        path: "account/profile",
+        name: "profile",
+        redirect: "/investor/account/profile/overview",
         component: () => import("@/views/investor/Account.vue"),
         meta: {
-          pageTitle: "My Account",
-          breadcrumbs: ["My-Account"],
+          pageTitle: "My Profile",
+          breadcrumbs: ["My-Profile"],
         },
+        children: [
+          {
+            path: "overview",
+            name: "account-overview",
+            component: () => import("@/views/investor/account/Overview.vue"),
+            meta: {
+              pageTitle: "Overview",
+            },
+          },
+          {
+            path: "settings",
+            name: "account-settings",
+            component: () => import("@/views/investor/account/Settings.vue"),
+            meta: {
+              pageTitle: "Settings",
+            },
+          },
+          {
+            path: "subscriptions",
+            name: "account-subscriptions",
+            component: () => import("@/views/investor/account/Subscriptions.vue"),
+            meta: {
+              pageTitle: "Subscriptions",
+            },
+          },
+          {
+            path: "documents",
+            name: "account-documents",
+            component: () => import("@/views/investor/account/Documents.vue"),
+            meta: {
+              pageTitle: "My Documents",
+            },
+          },
+        ],
       },
+      
     ]
   },
 ];

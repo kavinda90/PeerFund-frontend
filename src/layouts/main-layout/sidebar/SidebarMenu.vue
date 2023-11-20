@@ -23,7 +23,7 @@
           <div v-if="item.heading" class="menu-item pt-5">
             <div class="menu-content">
               <span class="menu-heading fw-bold text-uppercase fs-7">
-                {{ translate(item.heading) }}
+                {{ item.heading }}
               </span>
             </div>
           </div>
@@ -52,7 +52,7 @@
                     />
                   </span>
                   <span class="menu-title">{{
-                    translate(menuItem.heading)
+                    menuItem.heading
                   }}</span>
                 </router-link>
               </div>
@@ -81,7 +81,7 @@
                   />
                 </span>
                 <span class="menu-title">{{
-                  translate(menuItem.sectionTitle)
+                  menuItem.sectionTitle
                 }}</span>
                 <span class="menu-arrow"></span>
               </span>
@@ -101,7 +101,7 @@
                         <span class="bullet bullet-dot"></span>
                       </span>
                       <span class="menu-title">{{
-                        translate(item2.heading)
+                        item2.heading
                       }}</span>
                     </router-link>
                   </div>
@@ -117,7 +117,7 @@
                         <span class="bullet bullet-dot"></span>
                       </span>
                       <span class="menu-title">{{
-                        translate(item2.sectionTitle)
+                        item2.sectionTitle
                       }}</span>
                       <span class="menu-arrow"></span>
                     </span>
@@ -137,7 +137,7 @@
                               <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">{{
-                              translate(item3.heading)
+                              item3.heading
                             }}</span>
                           </router-link>
                         </div>
@@ -167,13 +167,11 @@ import InvestorMenuConfig from "@/core/config/InvestorMainMenuConfig";
 import BorrowerMenuConfig from "@/core/config/BorrowerMainMenuConfig";
 import { useAuthStore } from "@/stores/auth";
 import { sidebarMenuIcons } from "@/core/helpers/config";
-import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "sidebar-menu",
   components: {},
   setup() {
-    const { t, te } = useI18n();
     const route = useRoute();
     const scrollElRef = ref<null | HTMLElement>(null);
     const authStore = useAuthStore();
@@ -185,14 +183,6 @@ export default defineComponent({
       }
     });
 
-    const translate = (text: string) => {
-      if (te(text)) {
-        return t(text);
-      } else {
-        return text;
-      }
-    };
-
     const hasActiveChildren = (match: string) => {
       return route.path.indexOf(match) !== -1;
     };
@@ -201,7 +191,6 @@ export default defineComponent({
       hasActiveChildren,
       MainMenuConfig,
       sidebarMenuIcons,
-      translate,
       getAssetPath,
     };
   },

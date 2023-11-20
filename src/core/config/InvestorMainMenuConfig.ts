@@ -35,14 +35,20 @@ export interface MenuItem {
             keenthemesIcon: "bank",
             bootstrapIcon: "bi-layers",
         },
-        {
-            heading: "My Account",
-            route: "/investor/account",
-            keenthemesIcon: "user",
-            bootstrapIcon: "bi-layers",
-        },
       ],
     },
+    {
+      heading: "account",
+      route: "/investor/account",
+      pages: [
+        {
+          heading: "My Profile",
+          route: "/investor/account/profile",
+          keenthemesIcon: "user",
+          bootstrapIcon: "bi-layers",
+        },
+      ]
+    }
   ];
   
   export default MainMenuConfig;

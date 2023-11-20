@@ -8,7 +8,6 @@ TIP: To get started with clean router change path to @/router/clean.ts.
  */
 import router from "@/router/clean";
 import ElementPlus from "element-plus";
-import i18n from "@/core/plugins/i18n";
 
 //imports for app initialization
 import ApiService from "@/core/services/ApiService";
@@ -30,8 +29,6 @@ initApexCharts(app);
 initInlineSvg(app);
 initKtIcon(app);
 initVeeValidate();
-
-app.use(i18n);
 
 app.directive("tooltip", (el) => {
   new Tooltip(el);

@@ -1,122 +1,103 @@
 <template>
-  <!--begin::Tables widget 16-->
-  <div class="card card-flush" :class="className">
+  <!--begin::List Widget 5-->
+  <div class="card card-xl-stretch mb-xl-8">
     <!--begin::Header-->
-    <div class="card-header pt-5">
-      <!--begin::Title-->
+    <div class="card-header align-items-center border-0 mt-4">
       <h3 class="card-title align-items-start flex-column">
-        <span class="card-label fw-bold text-gray-800">Upcoming payments</span>
+        <span class="fw-bold mb-2 text-dark">Upcoming payments</span>
       </h3>
-      <!--end::Title-->
+
+      <div class="card-toolbar">
+        <!--begin::Menu-->
+        <button
+            type="button"
+            class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+            data-kt-menu-trigger="click"
+            data-kt-menu-placement="bottom-end"
+            data-kt-menu-flip="top-end"
+        >
+          <KTIcon icon-name="category" icon-class="fs-2"/>
+        </button>
+        <Dropdown1></Dropdown1>
+        <!--end::Menu-->
+      </div>
     </div>
     <!--end::Header-->
 
     <!--begin::Body-->
-    <div class="card-body pt-6">
-      <!--begin::Tap pane-->
-      <div class="tab-pane fade active show">
-        <!--begin::Table container-->
-        <div class="table-responsive">
-          <!--begin::Table-->
-          <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
-            <!--begin::Table head-->
-            <thead>
-            <tr class="fs-7 fw-bold text-gray-400 border-bottom-0 text-uppercase">
-              <th class="p-0 pb-3 min-w-150px text-start">Lender</th>
-              <th class="p-0 pb-3 min-w-100px text-end pe-13">Installment</th>
-              <th class="p-0 pb-3 w-125px text-start pe-7">Status</th>
-              <th class="p-0 pb-3 w-50px text-end">Pay</th>
-            </tr>
-            </thead>
-            <!--end::Table head-->
+    <div class="card-body pt-5">
+      <!--begin::Timeline-->
+      <div class="timeline-label">
+        <!--begin::Item-->
+        <div v-for="(p, i) in paymentData" class="timeline-item">
+          <!--begin::Label-->
+          <div class="timeline-label fw-bold text-gray-800 fs-6">{{ p.date }}</div>
+          <!--end::Label-->
 
-            <!--begin::Table body-->
-            <tbody>
-            <template v-for="(row, j) in payments" :key="j">
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <div class="symbol symbol-50px me-3">
-                      <img :src="row.agent.avatar" class="" alt=""/>
-                    </div>
+          <!--begin::Badge-->
+          <div class="timeline-badge">
+            <i class="fa fa-genderless fs-1"
+               :class="p.overdue === -1 && 'text-danger'
+               || p.overdue === 0 && 'text-warning'
+               || p.overdue === 1 && 'text-success'"></i>
+          </div>
+          <!--end::Badge-->
 
-                    <div class="d-flex justify-content-start flex-column">
-                      <router-link
-                          to="/crafted/pages/profile/overview"
-                          class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6"
-                      >{{ row.agent.name }}
-                      </router-link
-                      >
-                      <span
-                          class="text-gray-400 fw-semibold d-block fs-7"
-                      >{{ row.agent.city }}</span
-                      >
-                    </div>
-                  </div>
-                </td>
-
-                <td class="text-end pe-13">
-                        <span class="text-gray-600 fw-bold fs-6"
-                        >{{ row.price }}</span
-                        >
-                </td>
-
-                <td class="text-start px-0">
-                  <!--begin::Label-->
-                  <span v-if="row.isOverDue" class="badge badge-light-danger py-3 px-4 fs-base">Overdue</span>
-                  <!--end::Label-->
-                  <!--begin::Label-->
-                  <span v-else class="badge badge-light-success py-3 px-4 fs-base">Upcoming</span>
-                  <!--end::Label-->
-                </td>
-
-                <td class="text-start">
-                  <a
-                      href="#"
-                      class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px"
-                  >
-                    <KTIcon
-                        icon-name="black-right"
-                        icon-class="fs-5 text-gray-700"
-                    />
-                  </a>
-                </td>
-              </tr>
-            </template>
-            </tbody>
-            <!--end::Table body-->
-          </table>
-          <!--end::Table-->
+          <!--begin::Text-->
+          <div class="timeline-content ps-3">
+            <span class=" text-gray-800 "
+                  :class="p.overdue === -1 ? 'fw-bold ':'fw-normal'"> {{ p.lender }}</span>
+            <span  v-if="p.isAutoPayEnabled" class="ms-4 badge badge-light-success">Auto pay enabled</span>
+          </div>
+          <!--end::Text-->
+          <button class="btn btn-sm btn-light btn-active-light-primary">
+            Pay {{ p.installment }}
+          </button>
         </div>
-        <!--end::Table container-->
+        <!--end::Item-->
       </div>
-      <!--end::Tap pane-->
+      <!--end::Timeline-->
     </div>
     <!--end: Card Body-->
   </div>
-  <!--end::Tables widget 16-->
+  <!--end: List Widget 5-->
 </template>
 
 <script lang="ts">
 import {getAssetPath} from "@/core/helpers/assets";
+import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
+import {isBefore, isToday, parse} from "date-fns";
+import type {Overdue, Payment} from "@/models/Payment";
+import type {PropType} from "vue";
 import {defineComponent} from "vue";
-import Dropdown2 from "@/components/dropdown/Dropdown2.vue";
-import KTIcon from "@/core/helpers/kt-icon/KTIcon.vue";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default defineComponent({
   name: "UpcomingPayments",
-  components: {
-    FontAwesomeIcon,
-    KTIcon,
-    Dropdown2,
-  },
   props: {
-    className: {type: String, required: false},
-    payments: {type: Array, required: true}
+    payments: {type: Array as PropType<Payment[]>, required: true}
   },
-  setup() {
+  components: {
+    Dropdown1,
+  },
+  setup(props) {
+    const today = new Date();
+    const paymentData: Payment[] = props.payments.map((p: Payment) => {
+      const date = parse(p.date, 'yyyy-MM-dd', today);
+      let overdue: Overdue;
+      if (isToday(date)) {
+        overdue = 0;
+      } else if (isBefore(date, today)) {
+        overdue = -1;
+      } else {
+        overdue = 1;
+      }
+      return {
+        ...p,
+        overdue
+      }
+    });
     return {
+      paymentData,
       getAssetPath,
     };
   },

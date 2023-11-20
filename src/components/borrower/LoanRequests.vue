@@ -132,14 +132,14 @@
                       </td>
 
                       <td class="text-end">
-                        <a :href="`#/borrower/loans/${row.id}`"
+                        <router-link :to="`/borrower/loans/${row.id}`"
                           class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px"
                         >
                           <KTIcon
                             icon-name="black-right"
                             icon-class="fs-5 text-gray-700"
                           />
-                        </a>
+                        </router-link>
                       </td>
                     </tr>
                   </template>

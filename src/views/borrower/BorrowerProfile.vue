@@ -96,14 +96,12 @@ export default defineComponent({
               data-bs-trigger="hover"
               title="Edit customer details"
           >
-              <a
-                  href="#"
+              <router-link
+                  to="/borrower/edit-profile"
                   class="btn btn-sm btn-light-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#kt_modal_edit_profile"
               >
                 Edit
-              </a>
+              </router-link>
             </span>
         </div>
         <!--end::Details toggle-->

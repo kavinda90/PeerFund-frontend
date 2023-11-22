@@ -142,6 +142,15 @@ const borrowerRoutes = [
         },
       },
       {
+        path: "edit-profile",
+        name: "EditProfile",
+        component: () => import("@/views/borrower/ProfileSettings.vue"),
+        meta: {
+          pageTitle: "Edit Profile",
+          breadcrumbs: ["Profile", "Edit Profile"],
+        },
+      },
+      {
         path: "loans/:id",
         name: "Loan Details",
         component: () => import("@/views/borrower/LoanDetails.vue"),

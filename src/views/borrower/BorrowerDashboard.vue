@@ -2,6 +2,50 @@
   <!--begin::Row-->
   <div class="row g-5 g-xl-10">
     <!--begin::Col-->
+    <div class="col-xl-6">
+      <StatChart
+          chart-height="100"
+          widget-classes="card-xxl-stretch mb-5 mb-xl-8"
+          widget-color="#ffa833"
+      ></StatChart>
+    </div>
+    <!--end::Col-->
+    <div class="col-xl-2 col">
+      <Statistics
+          color="danger"
+          description="Current Outstanding"
+          icon-color="white"
+          icon-name="home"
+          title="700$"
+          widget-classes="card-xl-stretch mb-xl-8"
+      ></Statistics>
+    </div>
+    <div class="col-xl-2 col">
+      <Statistics
+          color="primary"
+          description="Amount paid"
+          icon-color="white"
+          icon-name="home"
+          title="200$"
+          widget-classes="card-xl-stretch mb-xl-8"
+      ></Statistics>
+    </div>
+    <div class="col-xl-2 col">
+      <Statistics
+          color="info"
+          description="Installments Due"
+          icon-color="white"
+          icon-name="home"
+          title="5"
+          widget-classes="card-xl-stretch mb-xl-8"
+      ></Statistics>
+    </div>
+  </div>
+  <!--end::Row-->
+
+  <!--begin::Row-->
+  <div class="row g-5 g-xl-10">
+    <!--begin::Col-->
     <div class="col">
       <UpcomingPayments :payments="upcomingPayments"/>
     </div>
@@ -34,10 +78,16 @@ import UpcomingPayments from "@/components/borrower/UpcomingPayments.vue";
 import LoanHistory from "@/components/borrower/LoanHistory.vue";
 import LoanRequests from "@/components/borrower/LoanRequests.vue";
 import Notifications from "@/components/borrower/Notifications.vue";
+import Statistics from "@/components/borrower/Statistics.vue";
+import MixedWidget13 from "@/components/widgets/mixed/Widget13.vue";
+import StatChart from "@/components/borrower/StatChart.vue";
 
 export default defineComponent({
   name: "borrower-dashboard",
   components: {
+    StatChart,
+    MixedWidget13,
+    Statistics,
     Notifications,
     LoanRequests,
     LoanHistory,
@@ -53,6 +103,55 @@ export default defineComponent({
   data() {
     return {
       upcomingPayments: [
+        {
+          lender: "#23423",
+          date: "2023-11-01",
+          installment: "78.34$",
+          loanId: 1123,
+          isAutoPayEnabled: false,
+        },
+        {
+          lender: "#13244",
+          date: "2023-11-19",
+          installment: "63.83$",
+          loanId: 1123,
+          isAutoPayEnabled: true,
+        },
+        {
+          lender: "#75356",
+          date: "2023-12-01",
+          installment: "63.83$",
+          loanId: 1123,
+          isAutoPayEnabled: true,
+        },
+        {
+          lender: "#62454",
+          date: "2023-12-05",
+          installment: "63.83$",
+          loanId: 1123,
+          isAutoPayEnabled: false,
+        },
+        {
+          lender: "#64572",
+          date: "2023-12-20",
+          installment: "63.83$",
+          loanId: 1123,
+          isAutoPayEnabled: false,
+        },
+        {
+          lender: "#17834",
+          date: "2023-12-22",
+          installment: "63.83$",
+          loanId: 2387,
+          isAutoPayEnabled: true,
+        },
+        {
+          lender: "#09874",
+          date: "2023-12-29",
+          installment: "63.83$",
+          loanId: 31245,
+          isAutoPayEnabled: true,
+        },
         {
           lender: "#23423",
           date: "2023-11-01",

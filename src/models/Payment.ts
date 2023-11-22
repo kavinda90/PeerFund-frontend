@@ -2,7 +2,7 @@ export interface Payment {
   lender: string;
   date: string;
   installment: string;
-  loanId: string;
+  loanId: number;
   overdue?: Overdue;
   isAutoPayEnabled: boolean;
 }

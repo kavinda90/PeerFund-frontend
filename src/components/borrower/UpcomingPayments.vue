@@ -26,37 +26,39 @@
 
     <!--begin::Body-->
     <div class="card-body pt-5">
-      <!--begin::Timeline-->
-      <div class="timeline-label">
-        <!--begin::Item-->
-        <div v-for="(p, i) in paymentData" class="timeline-item">
-          <!--begin::Label-->
-          <div class="timeline-label fw-bold text-gray-800 fs-6">{{ p.date }}</div>
-          <!--end::Label-->
+      <div class="mh-375px scroll-y me-n7 pe-7">
+        <!--begin::Timeline-->
+        <div class="timeline-label">
+          <!--begin::Item-->
+          <div v-for="(p, i) in paymentData" class="timeline-item">
+            <!--begin::Label-->
+            <div class="timeline-label fw-bold text-gray-800 fs-6">{{ p.date }}</div>
+            <!--end::Label-->
 
-          <!--begin::Badge-->
-          <div class="timeline-badge">
-            <i class="fa fa-genderless fs-1"
-               :class="p.overdue === -1 && 'text-danger'
+            <!--begin::Badge-->
+            <div class="timeline-badge">
+              <i :class="p.overdue === -1 && 'text-danger'
                || p.overdue === 0 && 'text-warning'
-               || p.overdue === 1 && 'text-success'"></i>
-          </div>
-          <!--end::Badge-->
+               || p.overdue === 1 && 'text-success'"
+                 class="fa fa-genderless fs-1"></i>
+            </div>
+            <!--end::Badge-->
 
-          <!--begin::Text-->
-          <div class="timeline-content ps-3">
+            <!--begin::Text-->
+            <div class="timeline-content ps-3">
             <span class=" text-gray-800 "
                   :class="p.overdue === -1 ? 'fw-bold ':'fw-normal'"> {{ p.lender }}</span>
-            <span  v-if="p.isAutoPayEnabled" class="ms-4 badge badge-light-success">Auto pay enabled</span>
+              <span v-if="p.isAutoPayEnabled"
+                    class="ms-4 badge badge-light-success">Auto pay enabled</span>
+            </div>
+            <!--end::Text-->
+            <button class="btn btn-sm btn-light btn-active-light-primary">
+              Pay {{ p.installment }}
+            </button>
           </div>
-          <!--end::Text-->
-          <button class="btn btn-sm btn-light btn-active-light-primary">
-            Pay {{ p.installment }}
-          </button>
+          <!--end::Item-->
         </div>
-        <!--end::Item-->
-      </div>
-      <!--end::Timeline-->
+        <!--end::Timeline--></div>
     </div>
     <!--end: Card Body-->
   </div>

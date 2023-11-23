@@ -30,12 +30,7 @@ export default defineComponent({
           <!--end::Avatar-->
 
           <!--begin::Name-->
-          <a
-              href="#"
-              class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1"
-          >
-            Max Smith
-          </a>
+          <span class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">Max Smith</span>
           <!--end::Name-->
 
           <!--begin::Position-->
@@ -45,29 +40,11 @@ export default defineComponent({
           <!--begin::Info-->
           <div class="d-flex flex-wrap flex-center">
             <!--begin::Stats-->
-            <div
-                class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3"
-            >
-              <div class="fs-4 fw-bold text-gray-700">
+            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3 bg-danger">
+              <div class="fs-4 fw-bold text-white">
                 <span class="w-75px">E (Very Good)</span>
-                <KTIcon icon-name="arrow-up" icon-class="fs-3 text-success" />
               </div>
-              <div class="fw-semobold text-muted">Credit Grade</div>
-            </div>
-            <!--end::Stats-->
-
-            <!--begin::Stats-->
-            <div
-                class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3"
-            >
-              <div class="fs-4 fw-bold text-gray-700">
-                <span class="w-50px">6</span>
-                <KTIcon
-                    icon-name="arrow-down"
-                    icon-class="fs-3 text-danger"
-                />
-              </div>
-              <div class="fw-semobold text-muted">Loans</div>
+              <div class="text-white text-center">Credit Grade</div>
             </div>
             <!--end::Stats-->
           </div>
@@ -77,43 +54,17 @@ export default defineComponent({
 
         <!--begin::Details toggle-->
         <div class="d-flex flex-stack fs-4 py-3">
-          <div
-              class="fw-bold rotate collapsible"
-              data-bs-toggle="collapse"
-              href="#kt_customer_view_details"
-              role="button"
-              aria-expanded="false"
-              aria-controls="kt_customer_view_details"
-          >
-            Details
-            <span class="ms-2 rotate-180">
-                <KTIcon icon-name="down" icon-class="fs-3" />
-              </span>
-          </div>
-
-          <span
-              data-bs-toggle="tooltip"
-              data-bs-trigger="hover"
-              title="Edit customer details"
-          >
-              <router-link
-                  to="/borrower/edit-profile"
-                  class="btn btn-sm btn-light-primary"
-              >
-                Edit
-              </router-link>
-            </span>
+          <span class="fw-bold">Details</span>
+          <router-link class="btn btn-sm btn-light-primary" to="/borrower/edit-profile">Edit
+          </router-link>
         </div>
         <!--end::Details toggle-->
 
         <div class="separator separator-dashed my-3"></div>
 
         <!--begin::Details content-->
-        <div id="kt_customer_view_details" class="collapse show">
+        <div>
           <div class="py-5 fs-6">
-            <!--begin::Badge-->
-            <div class="badge badge-light-info d-inline">Premium user</div>
-            <!--begin::Badge-->
             <!--begin::Details item-->
             <div class="fw-bold mt-5">Account ID</div>
             <div class="text-gray-600">ID-45453423</div>

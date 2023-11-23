@@ -114,16 +114,20 @@
           {{ customer.date }}
         </template>
         <template v-slot:actions="{ row: customer }">
-          <router-link :to="`/borrower/loans/${customer.id}`"
-                       class="btn btn-sm btn-light btn-active-light-primary">
+          <button
+              class="btn btn-sm btn-light btn-active-light-primary"
+              data-bs-target="#b_modal_loan_details"
+              data-bs-toggle="modal"
+              type="button"
+          >
             View
             <KTIcon icon-name="exit-right-corner" icon-class="fs-5 ms-2"/>
-          </router-link>
+          </button>
         </template>
       </Datatable>
     </div>
   </div>
-
+  <LoanDetailsModal></LoanDetailsModal>
   <ExportCustomerModal></ExportCustomerModal>
   <AddCustomerModal></AddCustomerModal>
 </template>
@@ -139,10 +143,12 @@ import type {ICustomer} from "@/core/data/customers";
 import customers from "@/core/data/customers";
 import arraySort from "array-sort";
 import {MenuComponent} from "@/assets/ts/components";
+import LoanDetailsModal from "@/components/borrower/LoanDetailsModal.vue";
 
 export default defineComponent({
   name: "customers-listing",
   components: {
+    LoanDetailsModal,
     Datatable,
     ExportCustomerModal,
     AddCustomerModal,

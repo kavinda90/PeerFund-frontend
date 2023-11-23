@@ -1,198 +1,128 @@
 <template>
-  <div class="card card-flush" :class="className">
-    <!--begin::Header-->
-    <div class="card-header pt-5">
-      <!--begin::Title-->
-      <div class="card-title d-flex flex-column">
-        <!--begin::Info-->
-        <div class="d-flex align-items-center">
-          <!--begin::Amount-->
-          <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ totalLoans }}</span>
-          <!--end::Amount-->
-
+  <!--begin::List Widget 1-->
+  <div :class="widgetClasses" class="card">
+    <!--begin::Body-->
+    <div class="card-body p-0">
+      <!--begin::Header-->
+      <div
+          :class="`bg-${widgetColor}`"
+          class="px-9 pt-7 card-rounded h-275px w-100"
+      >
+        <!--begin::Heading-->
+        <div class="d-flex flex-stack">
+          <h3 class="m-0 text-white fw-bold fs-3">Loan Summary</h3>
         </div>
-        <!--end::Info-->
+        <!--end::Heading-->
 
-        <!--begin::Subtitle-->
-        <span class="text-gray-400 pt-1 fw-semibold fs-6"
-        >Loan summary</span
-        >
-        <!--end::Subtitle-->
+        <!--begin::Balance-->
+        <div class="d-flex text-center flex-column text-white pt-8">
+          <span class="fw-semobold fs-7">Amount</span>
+          <span class="fw-bold fs-2x pt-1">$37,562.00</span>
+        </div>
+        <!--end::Balance-->
       </div>
-      <!--end::Title-->
-    </div>
-    <!--end::Header-->
+      <!--end::Header-->
 
-    <!--begin::Card body-->
-    <div class="card-body pt-2 pb-4 d-flex flex-wrap align-items-center">
-      <!--begin::Chart-->
-      <div class="d-flex flex-center me-5 pt-2">
-        <div
-            id="kt_card_widget_17_chart"
-            :style="{
-            minWidth: `${chartSize}px`,
-            minHeight: `${chartSize}px`,
-          }"
-            :data-kt-size="chartSize"
-            :data-kt-line="11"
-        ></div>
-      </div>
-      <!--end::Chart-->
-
-      <!--begin::Labels-->
-      <div class="d-flex flex-column content-justify-center flex-row-fluid">
-
-        <!--begin::Label-->
-        <div class="d-flex fw-semibold align-items-center">
-          <!--begin::Bullet-->
-          <div class="bullet w-8px h-3px rounded-2 bg-primary me-3"></div>
-          <!--end::Bullet-->
-
-          <!--begin::Label-->
-          <div class="text-gray-500 flex-grow-1 me-4">Active loans</div>
-          <!--end::Label-->
-
-          <!--begin::Stats-->
-          <div class="fw-bolder text-gray-700 text-xxl-end">{{ summary.active }}</div>
-          <!--end::Stats-->
-        </div>
-        <!--end::Label-->
-
-        <!--begin::Label-->
-        <div class="d-flex fw-semibold align-items-center my-3">
-          <!--begin::Bullet-->
-          <div class="bullet w-8px h-3px rounded-2 bg-success me-3"></div>
-          <!--end::Bullet-->
-
-          <!--begin::Label-->
-          <div class="text-gray-500 flex-grow-1 me-4">Approved loans</div>
-          <!--end::Label-->
-
-          <!--begin::Stats-->
-          <div class="fw-bolder text-gray-700 text-xxl-end">{{ summary.approved }}</div>
-          <!--end::Stats-->
-        </div>
-        <!--end::Label-->
-
-        <!--begin::Label-->
-        <div class="d-flex fw-semibold align-items-center">
-          <!--begin::Bullet-->
+      <!--begin::Items-->
+      <div
+          class="bg-body shadow-sm card-rounded mx-9 mb-9 px-6 py-9 position-relative z-index-1"
+          style="margin-top: -100px"
+      >
+        <template v-for="(item, index) in items" :key="index">
+          <!--begin::Item-->
           <div
-              class="bullet w-8px h-3px rounded-2 me-3"
-              style="background-color: #e4e6ef"
-          ></div>
-          <!--end::Bullet-->
+              :class="[index !== items.length && 'mb-7']"
+              class="d-flex align-items-center"
+          >
+            <!--begin::Symbol-->
+            <div class="symbol symbol-45px w-40px me-5">
+              <span class="symbol-label bg-lighten">
+                <KTIcon :icon-name="item.icon" icon-class="fs-1"/>
+              </span>
+            </div>
+            <!--end::Symbol-->
 
-          <!--begin::Label-->
-          <div class="text-gray-500 flex-grow-1 me-4">Pending loans</div>
-          <!--end::Label-->
+            <!--begin::Description-->
+            <div class="d-flex align-items-center flex-wrap w-100">
+              <!--begin::Title-->
+              <div class="mb-1 pe-3 flex-grow-1">
+                <a
+                    class="fs-5 text-gray-800 text-hover-primary fw-bold"
+                    href="#"
+                >{{ item.title }}</a
+                >
+                <div class="text-gray-400 fw-semobold fs-7">
+                  {{ item.description }}
+                </div>
+              </div>
+              <!--end::Title-->
 
-          <!--begin::Stats-->
-          <div class="fw-bolder text-gray-700 text-xxl-end">{{ summary.pending }}</div>
-          <!--end::Stats-->
-        </div>
-        <!--end::Label-->
+              <!--begin::Label-->
+              <div class="d-flex align-items-center">
+                <div class="fw-bold fs-5 text-gray-800 pe-1">
+                  {{ item.stats }}
+                </div>
+              </div>
+              <!--end::Label-->
+            </div>
+            <!--end::Description-->
+          </div>
+          <!--end::Item-->
+        </template>
       </div>
-      <!--end::Labels-->
+      <!--end::Items-->
     </div>
-    <!--end::Card body-->
+    <!--end::Body-->
   </div>
+  <!--end::List Widget 1-->
 </template>
 
 <script lang="ts">
 import {getAssetPath} from "@/core/helpers/assets";
-import {defineComponent, onMounted} from "vue";
-import {getCSSVariableValue} from "@/assets/ts/_utils";
-import {LoanSummary} from "@/models/LoanSummary";
+import {defineComponent} from "vue";
+import Dropdown3 from "@/components/dropdown/Dropdown3.vue";
 
 export default defineComponent({
   name: "LoanSummary",
-  components: {},
-  props: {
-    className: {type: String, required: false},
-    summary: {type: LoanSummary, required: true},
+  components: {
+    Dropdown3,
   },
-  setup(props, {expose}) {
-    const totalLoans = Object.values(props.summary).reduce((a, b) => a + b, 0);
-
-    const initChart = () => {
-      expose();
-      var el = document.getElementById("kt_card_widget_17_chart");
-
-      if (!el) {
-        return;
-      }
-
-      var options = {
-        size: el.getAttribute("data-kt-size")
-            ? parseInt(el.getAttribute("data-kt-size") as string)
-            : 70,
-        lineWidth: el.getAttribute("data-kt-line")
-            ? parseInt(el.getAttribute("data-kt-line") as string)
-            : 11,
-        rotate: el.getAttribute("data-kt-rotate")
-            ? parseInt(el.getAttribute("data-kt-rotate") as string)
-            : 145,
-        //percent:  el.getAttribute('data-kt-percent') ,
-      };
-
-      var canvas = document.createElement("canvas");
-      var span = document.createElement("span");
-
-      var ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-      canvas.width = canvas.height = options.size;
-
-      el.appendChild(span);
-      el.appendChild(canvas);
-
-      ctx.translate(options.size / 2, options.size / 2); // change center
-      ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI); // rotate -90 deg
-
-      //imd = ctx.getImageData(0, 0, 240, 240);
-      var radius = (options.size - options.lineWidth) / 2;
-
-      var drawCircle = function (
-          color: string,
-          lineWidth: number,
-          percent: number
-      ) {
-        percent = Math.min(Math.max(0, percent || 1), 1);
-        ctx.beginPath();
-        ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
-        ctx.strokeStyle = color;
-        ctx.lineCap = "round"; // butt, round or square
-        ctx.lineWidth = lineWidth;
-        ctx.stroke();
-      };
-
-      // Init
-      drawCircle("#E4E6EF", options.lineWidth, 1);
-      // This displays only active %, but approved % is necessary to visualise it correctly
-      drawCircle(
-          getCSSVariableValue("--bs-primary"),
-          options.lineWidth,
-          (props.summary.active + props.summary.approved) / totalLoans,
-      );
-      drawCircle(
-          getCSSVariableValue("--bs-success"),
-          options.lineWidth,
-          props.summary.approved / totalLoans,
-      );
-    };
-
-    onMounted(() => {
-      initChart();
-    });
+  props: {
+    widgetClasses: String,
+    widgetColor: String,
+    chartHeight: Number,
+  },
+  setup() {
+    const items = [
+      {
+        icon: "percentage",
+        title: "Interest rate",
+        description: "",
+        stats: "2.5%",
+      },
+      {
+        icon: "calendar",
+        title: "Period",
+        stats: "2 Years",
+      },
+      {
+        icon: "finance-calculator",
+        title: "Installment",
+        description: "Bi-Weekly",
+        stats: "$200",
+      },
+      {
+        icon: "bank",
+        title: "Payment method",
+        description: "Auto pay enabled",
+        stats: "TD Bank",
+      },
+    ];
 
     return {
-      totalLoans,
+      items,
       getAssetPath,
     };
   },
-  data() {
-    return {
-      chartSize: 70,
-    }
-  }
 });
 </script>

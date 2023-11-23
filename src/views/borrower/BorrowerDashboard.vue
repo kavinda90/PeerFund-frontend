@@ -6,7 +6,7 @@
       <StatChart
           chart-height="100"
           widget-classes="card-xxl-stretch mb-5 mb-xl-8"
-          widget-color="#ffa833"
+          widget-color="#50cd89"
       ></StatChart>
     </div>
     <!--end::Col-->
@@ -15,7 +15,7 @@
           color="danger"
           description="Current Outstanding"
           icon-color="white"
-          icon-name="home"
+          icon-name="information-5"
           title="700$"
           widget-classes="card-xl-stretch mb-xl-8"
       ></Statistics>
@@ -25,7 +25,7 @@
           color="primary"
           description="Amount paid"
           icon-color="white"
-          icon-name="home"
+          icon-name="wallet"
           title="200$"
           widget-classes="card-xl-stretch mb-xl-8"
       ></Statistics>
@@ -35,7 +35,7 @@
           color="info"
           description="Installments Due"
           icon-color="white"
-          icon-name="home"
+          icon-name="time"
           title="5"
           widget-classes="card-xl-stretch mb-xl-8"
       ></Statistics>
@@ -73,7 +73,7 @@
 import {getAssetPath} from "@/core/helpers/assets";
 import {defineComponent} from "vue";
 import CreditGrade from "@/components/borrower/CreditGrade.vue";
-import LoanSummary from "@/components/borrower/LoanSummary.vue";
+import LoanSummary from "@/components/borrower/LoanSummaryOld.vue";
 import UpcomingPayments from "@/components/borrower/UpcomingPayments.vue";
 import LoanHistory from "@/components/borrower/LoanHistory.vue";
 import LoanRequests from "@/components/borrower/LoanRequests.vue";

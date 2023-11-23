@@ -31,11 +31,6 @@ export interface MenuItem {
           route: "/borrower/profile",
           keenthemesIcon: "user",
         },
-        {
-          heading: "sample-dashboard",
-          route: "/borrower/sample-dashboard",
-          keenthemesIcon: "home-1",
-        },
       ],
     },
   ];

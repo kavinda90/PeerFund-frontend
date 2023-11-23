@@ -107,7 +107,7 @@ const borrowerRoutes = [
     children: [
       {
         path: "dashboard",
-        name: "Dashboard",
+        name: "borrower-dashboard",
         component: () => import("@/views/borrower/BorrowerDashboard.vue"),
         meta: {
           pageTitle: "Dashboard",
@@ -116,8 +116,8 @@ const borrowerRoutes = [
       },
       {
         path: "payment-methods",
-        name: "Payment Methods",
-        component: () => import("@/views/borrower/Payment.vue"),
+        name: "PaymentMethods",
+        component: () => import("@/views/borrower/PaymentMethods.vue"),
         meta: {
           pageTitle: "Payment Methods",
           breadcrumbs: ["Payment Methods"],
@@ -152,32 +152,13 @@ const borrowerRoutes = [
       },
       {
         path: "loans/:id",
-        name: "Loan Details",
+        name: "LoanDetails",
         component: () => import("@/views/borrower/LoanDetails.vue"),
         meta: {
           pageTitle: "Loan Details",
           breadcrumbs: ["Loan History", "Loan Details"],
         },
         props: true,
-      },
-      {
-        path: "payment-method/:id",
-        name: "Payment Method",
-        component: () => import("@/views/borrower/PaymentMethod.vue"),
-        meta: {
-          pageTitle: "Payment Method",
-          breadcrumbs: ["Payment Methods", "Payment Method"],
-        },
-        props: true,
-      },
-      {
-        path: "sample-dashboard",
-        name: "Sample-dashboard",
-        component: () => import("@/views/borrower/Dashboard.vue"),
-        meta: {
-          pageTitle: "Sample dashboard",
-          breadcrumbs: ["Sample dashboard"],
-        },
       },
     ]
   },

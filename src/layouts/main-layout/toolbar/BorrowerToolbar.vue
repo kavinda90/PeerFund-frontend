@@ -27,7 +27,7 @@
             href="#"
             class="btn btn-sm fw-bold btn-primary"
             data-bs-toggle="modal"
-            data-bs-target="#kt_modal_new_target"
+            data-bs-target="#b_loan_request_modal"
             >New Loan</a
           >
           <!--end::Primary button-->
@@ -37,17 +37,18 @@
       <!--end::Toolbar container-->
     </div>
     <!--end::Toolbar-->
+  <LoanRequestModal></LoanRequestModal>
   </template>
-  
+
   <script lang="ts">
-  import { defineComponent } from "vue";
-  import { toolbarWidthFluid } from "@/core/helpers/config";
-  import KTPageTitle from "@/layouts/main-layout/toolbar/PageTitle.vue";
-  
+  import {defineComponent} from "vue";
+  import {toolbarWidthFluid} from "@/core/helpers/config";
+  import LoanRequestModal from "@/components/borrower/LoanRequestModal.vue";
+
   export default defineComponent({
     name: "borrower-layout-toolbar",
     components: {
-      KTPageTitle,
+      LoanRequestModal,
     },
     setup() {
       return {
@@ -56,4 +57,3 @@
     },
   });
   </script>
-  

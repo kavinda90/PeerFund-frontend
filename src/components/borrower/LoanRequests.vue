@@ -71,8 +71,8 @@
                   <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
                     <th class="p-0 pb-3 min-w-150px text-start">Lender</th>
                     <th class="p-0 pb-3 min-w-100px text-end pe-13">CONV.</th>
-                    <th class="p-0 pb-3 w-125px text-end pe-7">Status</th>
-                    <th class="p-0 pb-3 w-50px text-end">Details</th>
+                    <th class="p-0 pb-3 text-end pe-7">Status</th>
+                    <th class="p-0 pb-3 text-end">Details</th>
                   </tr>
                 </thead>
                 <!--end::Table head-->
@@ -132,14 +132,15 @@
                       </td>
 
                       <td class="text-end">
-                        <router-link :to="`/borrower/loans/${row.id}`"
-                          class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px"
+                        <button
+                            class="btn btn-sm btn-light btn-active-light-primary"
+                            data-bs-target="#b_modal_loan_details"
+                            data-bs-toggle="modal"
+                            type="button"
                         >
-                          <KTIcon
-                            icon-name="black-right"
-                            icon-class="fs-5 text-gray-700"
-                          />
-                        </router-link>
+                          View
+                          <KTIcon icon-class="fs-5 ms-2" icon-name="exit-right-corner"/>
+                        </button>
                       </td>
                     </tr>
                   </template>
@@ -158,15 +159,18 @@
     <!--end: Card Body-->
   </div>
   <!--end::Tables widget 16-->
+  <LoanDetailsModal></LoanDetailsModal>
 </template>
 
 <script lang="ts">
 import {getAssetPath} from "@/core/helpers/assets";
 import {defineComponent} from "vue";
+import LoanDetailsModal from "@/components/borrower/LoanDetailsModal.vue";
 
 export default defineComponent({
   name: "LoanRequests",
   components: {
+    LoanDetailsModal
   },
   props: {
     className: { type: String, required: false },

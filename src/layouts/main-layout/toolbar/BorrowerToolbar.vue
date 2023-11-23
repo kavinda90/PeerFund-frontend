@@ -13,23 +13,9 @@
         <KTPageTitle />
         <!--begin::Actions-->
         <div class="d-flex align-items-center gap-2 gap-lg-3">
-          <!--begin::Secondary button-->
-          <!-- <a
-            href="#"
-            class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#kt_modal_create_app"
-            >Fund Account</a
-          > -->
-          <!--end::Secondary button-->
           <!--begin::Primary button-->
-          <a
-            href="#"
-            class="btn btn-sm fw-bold btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#b_loan_request_modal"
-            >New Loan</a
-          >
+          <a class="btn btn-sm fw-bold btn-primary" data-bs-target="#b_loan_request_modal"
+             data-bs-toggle="modal" href="#">New Loan</a>
           <!--end::Primary button-->
         </div>
         <!--end::Actions-->

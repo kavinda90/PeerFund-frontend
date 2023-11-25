@@ -13,23 +13,9 @@
         <KTPageTitle />
         <!--begin::Actions-->
         <div class="d-flex align-items-center gap-2 gap-lg-3">
-          <!--begin::Secondary button-->
-          <!-- <a
-            href="#"
-            class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#kt_modal_create_app"
-            >Fund Account</a
-          > -->
-          <!--end::Secondary button-->
           <!--begin::Primary button-->
-          <a
-            href="#"
-            class="btn btn-sm fw-bold btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#kt_modal_new_target"
-            >New Loan</a
-          >
+          <a class="btn btn-sm fw-bold btn-primary" data-bs-target="#b_loan_request_modal"
+             data-bs-toggle="modal" href="#">New Loan</a>
           <!--end::Primary button-->
         </div>
         <!--end::Actions-->
@@ -37,17 +23,18 @@
       <!--end::Toolbar container-->
     </div>
     <!--end::Toolbar-->
+  <LoanRequestModal></LoanRequestModal>
   </template>
-  
+
   <script lang="ts">
-  import { defineComponent } from "vue";
-  import { toolbarWidthFluid } from "@/core/helpers/config";
-  import KTPageTitle from "@/layouts/main-layout/toolbar/PageTitle.vue";
-  
+  import {defineComponent} from "vue";
+  import {toolbarWidthFluid} from "@/core/helpers/config";
+  import LoanRequestModal from "@/components/borrower/LoanRequestModal.vue";
+
   export default defineComponent({
     name: "borrower-layout-toolbar",
     components: {
-      KTPageTitle,
+      LoanRequestModal,
     },
     setup() {
       return {
@@ -56,4 +43,3 @@
     },
   });
   </script>
-  

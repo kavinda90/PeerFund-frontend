@@ -30,10 +30,10 @@
           <el-form
               id="kt_modal_new_target_form"
               ref="formRef"
-              :model="targetData"
+              :model="loanRequest"
               :rules="rules"
               class="form"
-              @submit.prevent="submit()"
+              @submit.prevent="submit(loanRequest)"
           >
             <!--begin::Heading-->
             <div class="mb-13 text-center">
@@ -56,10 +56,10 @@
               </label>
               <!--end::Label-->
 
-              <el-form-item prop="targetTitle">
+              <el-form-item prop="amount">
                 <el-input
-                    v-model="targetData.targetTitle"
-                    name="targetTitle"
+                    v-model="loanRequest.amount"
+                    name="amount"
                     placeholder="Amount in dollars"
                     type="number"
                 ></el-input>
@@ -76,11 +76,11 @@
                 <!--begin::Input-->
                 <div class="position-relative align-items-center">
                   <!--begin::Datepicker-->
-                  <el-form-item prop="dueDate">
+                  <el-form-item prop="preferredDate">
                     <el-date-picker
-                        v-model="targetData.dueDate"
+                        v-model="loanRequest.preferredDate"
                         :teleported="false"
-                        name="dueDate"
+                        name="preferredDate"
                         placeholder="When do you want the loan?"
                         popper-class="override-styles"
                         type="date"
@@ -99,11 +99,11 @@
                 <!--begin::Input-->
                 <div class="position-relative align-items-center">
                   <!--begin::Datepicker-->
-                  <el-form-item prop="dueDate">
+                  <el-form-item prop="payOffDate">
                     <el-date-picker
-                        v-model="targetData.dueDate"
+                        v-model="loanRequest.payOffDate"
                         :teleported="false"
-                        name="dueDate"
+                        name="payOffDate"
                         placeholder="When do you pay off the loan?"
                         popper-class="override-styles"
                         type="date"
@@ -118,24 +118,71 @@
             <!--end::Input group-->
 
             <!--begin::Input group-->
+            <div class="row g-9 mb-8">
+              <!--begin::Col-->
+              <div class="col-md-6 fv-row">
+                <label class="required fs-6 fw-semobold mb-2">Payment term</label>
+
+                <!--begin::Input-->
+                <div class="position-relative align-items-center">
+                  <!--begin::Drop down-->
+                  <el-form-item prop="paymentTerm">
+                    <el-select
+                        v-model="loanRequest.paymentTerm"
+                        as="select"
+                        name="paymentTerm"
+                        placeholder="Payment term"
+                    >
+                      <el-option value="">Select a purpose...</el-option>
+                      <el-option label="Weekly" value="weekly">Weekly</el-option>
+                      <el-option label="Bi-weekly" value="biweekly">Bi-weekly</el-option>
+                      <el-option label="Monthly" value="monthly">Monthly</el-option>
+                    </el-select>
+                  </el-form-item>
+                  <!--end::Drop down-->
+                </div>
+                <!--end::Input-->
+              </div>
+              <!--end::Col-->
+
+              <!--begin::Col-->
+              <div class="col-md-6 fv-row">
+                <label class="fs-6 fw-semobold mb-2">Estimated base installment</label>
+
+                <!--begin::Input-->
+                <div v-if="estimatedInstallment" class="position-relative align-items-center py-2">
+                  <span>${{ estimatedInstallment }}</span><span
+                    class="ms-2 fs-7 fw-bold text-gray-400">Without interest + fees</span>
+                </div>
+                <!--end::Input-->
+              </div>
+              <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+
+            <!--begin::Input group-->
             <div class="d-flex flex-column mb-8 fv-row">
               <label class="required fs-6 fw-semibold mb-2">Purpose</label>
 
-              <el-form-item prop="assign">
+              <el-form-item prop="purpose">
                 <el-select
-                    v-model="targetData.assign"
+                    v-model="loanRequest.purpose"
                     as="select"
-                    name="assign"
+                    name="purpose"
                     placeholder="Purpose of the loan"
                 >
                   <el-option value="">Select a purpose...</el-option>
-                  <el-option label="Karina Clark" value="1">Consolidate debt</el-option>
-                  <el-option label="Robert Doe" value="2">Emergency</el-option>
-                  <el-option label="Niel Owen" value="3">Personal</el-option>
-                  <el-option label="Olivia Wild" value="4">Home improvement / Moving out</el-option>
-                  <el-option label="Sean Bean" value="5">Education</el-option>
-                  <el-option label="Sean Bean" value="6">Celebration / Vacation</el-option>
-                  <el-option label="Sean Bean" value="7">Other</el-option>
+                  <el-option label="Consolidate debt" value="debt">Consolidate debt</el-option>
+                  <el-option label="Credit card" value="creditcard">Credit card</el-option>
+                  <el-option label="Car" value="car">Car</el-option>
+                  <el-option label="Home improvement / Moving out" value="home">Home improvement /
+                    Moving out
+                  </el-option>
+                  <el-option label="Bills" value="bills">Bills</el-option>
+                  <el-option label="Celebration / Vacation" value="wedding">Celebration / Vacation
+                  </el-option>
+                  <el-option label="Education" value="education">Education</el-option>
+                  <el-option label="Other" value="other">Other</el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -145,10 +192,10 @@
             <div class="d-flex flex-column mb-8">
               <label class="fs-6 fw-semobold mb-2">Details of the purpose</label>
 
-              <el-form-item prop="targetDetails">
+              <el-form-item prop="description">
                 <el-input
-                    v-model="targetData.targetDetails"
-                    name="targetDetails"
+                    v-model="loanRequest.description"
+                    name="description"
                     placeholder="Let us know more details, it will help us to approve the loan faster"
                     rows="3"
                     type="textarea"
@@ -165,7 +212,7 @@
                 >Prefer urgent approval</label
                 >
 
-                <div class="fs-7 fw-semobold text-gray-400">
+                <div class="fs-7 fw-semibold text-gray-400">
                   Enabling this doesn't guarantee faster approval, But we will do our best to look
                   at your requested as soon as possible
                 </div>
@@ -176,14 +223,17 @@
               <label
                   class="form-check form-switch form-check-custom form-check-solid"
               >
-                <input
-                    checked
-                    class="form-check-input"
-                    type="checkbox"
-                    value="1"
-                />
-                <span class="form-check-label fw-semobold text-gray-400">
-                  Urgent
+                <el-form-item prop="isUrgent">
+                  <el-switch
+                      v-model="loanRequest.isUrgent"
+                      active-text="Urgent"
+                      class="form-check-label fw-semobold text-gray-400"
+                      inactive-text=""
+                      size="large"
+                  />
+                </el-form-item>
+                <span>
+
                 </span>
               </label>
               <!--end::Switch-->
@@ -206,34 +256,12 @@
 
                 <!--begin::Checkboxes-->
                 <div class="d-flex align-items-center">
-                  <!--begin::Checkbox-->
-                  <label
-                      class="form-check form-check-custom form-check-solid me-10"
-                  >
-                    <input
-                        checked
-                        class="form-check-input h-20px w-20px"
-                        name="communication[]"
-                        type="checkbox"
-                        value="email"
-                    />
-
-                    <span class="form-check-label fw-semobold"> Email </span>
-                  </label>
-                  <!--end::Checkbox-->
-
-                  <!--begin::Checkbox-->
-                  <label class="form-check form-check-custom form-check-solid">
-                    <input
-                        class="form-check-input h-20px w-20px"
-                        name="communication[]"
-                        type="checkbox"
-                        value="phone"
-                    />
-
-                    <span class="form-check-label fw-semobold"> Phone </span>
-                  </label>
-                  <!--end::Checkbox-->
+                  <el-form-item prop="notifications">
+                    <el-checkbox-group v-model="loanRequest.notifications">
+                      <el-checkbox label="Email"/>
+                      <el-checkbox label="Phone"/>
+                    </el-checkbox-group>
+                  </el-form-item>
                 </div>
                 <!--end::Checkboxes-->
               </div>
@@ -299,87 +327,127 @@ import {getAssetPath} from "@/core/helpers/assets";
 import {defineComponent, ref} from "vue";
 import {hideModal} from "@/core/helpers/dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
-
-interface NewAddressData {
-  targetTitle: string;
-  assign: string;
-  dueDate: string;
-  targetDetails: string;
-  tags: Array<string>;
-}
+import {Notifications, PaymentTerms} from "@/core/utils/enums";
+import {addDays, addYears, differenceInDays} from "date-fns";
+import type {LoanRequest} from "@/core/services/Models";
+import {useBorrowerStore} from "@/stores/borrower";
+import {useAuthStore} from "@/stores/auth";
 
 export default defineComponent({
   name: "LoanRequestModal",
   components: {},
-  setup() {
+  setup(prop) {
     const formRef = ref<null | HTMLFormElement>(null);
     const newTargetModalRef = ref<null | HTMLElement>(null);
     const loading = ref<boolean>(false);
-
-    const targetData = ref<NewAddressData>({
-      targetTitle: "",
-      assign: "",
-      dueDate: "",
-      targetDetails: "",
-      tags: ["important", "urgent"],
+    const tomorrow = addDays(new Date(), 1);
+    const user = useAuthStore().user;
+    const loanRequest = ref<LoanRequest>({
+      amount: 0.0,
+      accountId: user.id,
+      preferredDate: tomorrow,
+      description: null,
+      loanPeriod: -1,
+      paymentTerm: "",
+      purpose: "",
+      isUrgent: false,
+      payOffDate: addYears(tomorrow, 1),
+      notifications: [Notifications.Email]
     });
 
     const rules = ref({
-      targetTitle: [
+      amount: [
         {
           required: true,
-          message: "Please input Activity name",
+          message: "Please fill amount",
           trigger: "blur",
         },
       ],
-      assign: [
+      accountId: [
         {
           required: true,
-          message: "Please select Activity zone",
+          message: "form error",
           trigger: "change",
         },
       ],
-      dueDate: [
+      preferredDate: [
         {
           required: true,
-          message: "Please select Activity zone",
+          message: "Please select preferred date",
           trigger: "change",
         },
       ],
-      tags: [
+      description: [
+        {
+          required: false,
+        },
+      ],
+      loanPeriod: [
         {
           required: true,
-          message: "Please select Activity zone",
+          message: "form error",
           trigger: "change",
+        },
+      ],
+      paymentTerm: [
+        {
+          required: true,
+          message: "Please select preferred payment term",
+          trigger: "change",
+        },],
+      purpose: [
+        {
+          required: true,
+          message: "Please select purpose of the loan",
+          trigger: "change",
+        },
+      ],
+      isUrgent: [
+        {
+          required: false,
+        },
+      ],
+      notifications: [
+        {
+          required: false,
         },
       ],
     });
 
-    const submit = () => {
+    const processResponse = (isSuccess: boolean) => {
+
+      loading.value = false;
+
+      Swal.fire({
+        text: isSuccess ? "Form has been successfully submitted!" : "Request failed, Please try again later",
+        icon: isSuccess ? "success" : "danger",
+        buttonsStyling: false,
+        confirmButtonText: "Ok, got it!",
+        heightAuto: false,
+        customClass: {
+          confirmButton: "btn btn-primary",
+        },
+      }).then(() => {
+        hideModal(newTargetModalRef.value);
+      });
+    };
+    const submit = (t: any) => {
       if (!formRef.value) {
         return;
       }
 
-      formRef.value.validate((valid: boolean) => {
+      t.loanPeriod = prop.loanPeriods;
+
+      formRef.value.validate(async (valid: boolean) => {
         if (valid) {
           loading.value = true;
+          await useBorrowerStore().createLoanRequest(t).then(() => {
+            processResponse(true);
+          })
+          .catch(() => {
+            processResponse(false);
+          })
 
-          setTimeout(() => {
-            loading.value = false;
-
-            Swal.fire({
-              text: "Form has been successfully submitted!",
-              icon: "success",
-              buttonsStyling: false,
-              confirmButtonText: "Ok, got it!",
-              heightAuto: false,
-              customClass: {
-                confirmButton: "btn btn-primary",
-              },
-            }).then(() => {
-              hideModal(newTargetModalRef.value);
-            });
-          }, 2000);
         } else {
           Swal.fire({
             text: "Sorry, looks like there are some errors detected, please try again.",
@@ -397,7 +465,7 @@ export default defineComponent({
     };
 
     return {
-      targetData,
+      loanRequest,
       submit,
       loading,
       formRef,
@@ -406,6 +474,35 @@ export default defineComponent({
       getAssetPath,
     };
   },
+  computed: {
+    paymentTermDays: function () {
+      switch (this.loanRequest.paymentTerm) {
+        case PaymentTerms.biweekly:
+          return 14;
+        case PaymentTerms.monthly:
+          return 30;
+        case PaymentTerms.weekly:
+          return 7;
+        default:
+          return null;
+      }
+    },
+    loanPeriods: function () {
+      if (!this.loanRequest.payOffDate || !this.loanRequest.preferredDate || !this.paymentTermDays) {
+        return null;
+      } else {
+        const dayDiff = differenceInDays(this.loanRequest.payOffDate, this.loanRequest.preferredDate);
+        return Math.floor(dayDiff / this.paymentTermDays);
+      }
+    },
+    estimatedInstallment: function () {
+      if (!this.loanPeriods || !this.loanRequest.amount) {
+        return null;
+      } else {
+        return Number(this.loanRequest.amount / this.loanPeriods).toFixed(2);
+      }
+    }
+  }
 });
 </script>
 

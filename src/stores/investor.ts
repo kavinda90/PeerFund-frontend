@@ -1,13 +1,12 @@
-import { ref } from "vue";
-import { defineStore } from "pinia";
+import {ref} from "vue";
+import {defineStore} from "pinia";
 import ApiService from "@/core/services/ApiService";
-import JwtService from "@/core/services/JwtService";
-import type { InvestorAccount, LoanRequest } from "@/core/services/Models";
+import type {InvestorAccount, Loan} from "@/core/services/Models";
 
 export const useInvestorStore = defineStore("investorStore", () => {
     const errors = ref({});
     const investor = ref<InvestorAccount>({} as InvestorAccount);
-    const loanRequests = ref<LoanRequest[]>({} as LoanRequest[]);
+    const loanRequests = ref<Loan[]>({} as Loan[]);
 
     function setError(error: any) {
         errors.value = { ...error };
@@ -37,7 +36,7 @@ export const useInvestorStore = defineStore("investorStore", () => {
         getActiveLoanRequests,
         loanRequests
     };
-    
+
 
 });
 

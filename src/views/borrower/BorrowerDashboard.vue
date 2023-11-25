@@ -79,14 +79,12 @@ import LoanHistory from "@/components/borrower/LoanHistory.vue";
 import LoanRequests from "@/components/borrower/LoanRequests.vue";
 import Notifications from "@/components/borrower/Notifications.vue";
 import Statistics from "@/components/borrower/Statistics.vue";
-import MixedWidget13 from "@/components/widgets/mixed/Widget13.vue";
 import StatChart from "@/components/borrower/StatChart.vue";
 
 export default defineComponent({
   name: "borrower-dashboard",
   components: {
     StatChart,
-    MixedWidget13,
     Statistics,
     Notifications,
     LoanRequests,

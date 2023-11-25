@@ -55,7 +55,8 @@ export default defineComponent({
         <!--begin::Details toggle-->
         <div class="d-flex flex-stack fs-4 py-3">
           <span class="fw-bold">Details</span>
-          <router-link class="btn btn-sm btn-light-primary" to="/borrower/edit-profile">Edit
+          <router-link class="btn btn-sm btn-light-primary" to="/borrower/edit-profile">
+            Edit profile and settings
           </router-link>
         </div>
         <!--end::Details toggle-->

@@ -6,9 +6,8 @@
       <h3 class="card-title align-items-start flex-column">
         <span class="fw-bold mb-2 text-dark">Upcoming payments</span>
       </h3>
-
-      <div class="card-toolbar">
-        <!--begin::Menu-->
+      <!--
+            <div class="card-toolbar">
         <button
             type="button"
             class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
@@ -18,9 +17,8 @@
         >
           <KTIcon icon-name="category" icon-class="fs-2"/>
         </button>
-        <Dropdown1></Dropdown1>
-        <!--end::Menu-->
-      </div>
+        <UpcomingPaymentFilter></UpcomingPaymentFilter>
+      </div>-->
     </div>
     <!--end::Header-->
 
@@ -67,11 +65,11 @@
 
 <script lang="ts">
 import {getAssetPath} from "@/core/helpers/assets";
-import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
 import {isBefore, isToday, parse} from "date-fns";
 import type {Overdue, Payment} from "@/models/Payment";
 import type {PropType} from "vue";
 import {defineComponent} from "vue";
+import UpcomingPaymentFilter from "@/components/borrower/UpcomingPaymentFilter.vue";
 
 export default defineComponent({
   name: "UpcomingPayments",
@@ -79,7 +77,7 @@ export default defineComponent({
     payments: {type: Array as PropType<Payment[]>, required: true}
   },
   components: {
-    Dropdown1,
+    UpcomingPaymentFilter
   },
   setup(props) {
     const today = new Date();

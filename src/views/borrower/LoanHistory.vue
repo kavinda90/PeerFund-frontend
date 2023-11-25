@@ -128,8 +128,7 @@
     </div>
   </div>
   <LoanDetailsModal></LoanDetailsModal>
-  <ExportCustomerModal></ExportCustomerModal>
-  <AddCustomerModal></AddCustomerModal>
+  <ExportLoanHistoryModal></ExportLoanHistoryModal>
 </template>
 
 <script lang="ts">
@@ -137,8 +136,7 @@ import {getAssetPath} from "@/core/helpers/assets";
 import {defineComponent, onMounted, ref} from "vue";
 import Datatable from "@/components/kt-datatable/KTDataTable.vue";
 import type {Sort} from "@/components/kt-datatable//table-partials/models";
-import ExportCustomerModal from "@/components/modals/forms/ExportCustomerModal.vue";
-import AddCustomerModal from "@/components/modals/forms/AddCustomerModal.vue";
+import ExportLoanHistoryModal from "@/components/borrower/ExportLoanHistoryModal.vue";
 import type {ICustomer} from "@/core/data/customers";
 import customers from "@/core/data/customers";
 import arraySort from "array-sort";
@@ -150,8 +148,7 @@ export default defineComponent({
   components: {
     LoanDetailsModal,
     Datatable,
-    ExportCustomerModal,
-    AddCustomerModal,
+    ExportLoanHistoryModal,
   },
   setup() {
     const tableHeader = ref([

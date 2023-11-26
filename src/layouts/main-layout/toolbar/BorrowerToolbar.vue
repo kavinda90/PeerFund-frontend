@@ -21,20 +21,23 @@
         <!--end::Actions-->
       </div>
       <!--end::Toolbar container-->
+      <LoanRequestModal></LoanRequestModal>
     </div>
     <!--end::Toolbar-->
-  <LoanRequestModal></LoanRequestModal>
+  
   </template>
 
   <script lang="ts">
   import {defineComponent} from "vue";
   import {toolbarWidthFluid} from "@/core/helpers/config";
   import LoanRequestModal from "@/components/borrower/LoanRequestModal.vue";
+  import KTPageTitle from "@/layouts/main-layout/toolbar/PageTitle.vue";
 
   export default defineComponent({
     name: "borrower-layout-toolbar",
     components: {
       LoanRequestModal,
+      KTPageTitle,
     },
     setup() {
       return {

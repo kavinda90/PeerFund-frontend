@@ -324,7 +324,7 @@
 
 <script lang="ts">
 import {getAssetPath} from "@/core/helpers/assets";
-import {defineComponent, ref} from "vue";
+import {computed, defineComponent, ref} from "vue";
 import {hideModal} from "@/core/helpers/dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import {Notifications, PaymentTerms} from "@/core/utils/enums";
@@ -336,7 +336,7 @@ import {useAuthStore} from "@/stores/auth";
 export default defineComponent({
   name: "LoanRequestModal",
   components: {},
-  setup(prop) {
+  setup() {
     const formRef = ref<null | HTMLFormElement>(null);
     const newTargetModalRef = ref<null | HTMLElement>(null);
     const loading = ref<boolean>(false);
@@ -436,7 +436,7 @@ export default defineComponent({
         return;
       }
 
-      t.loanPeriod = prop.loanPeriods;
+      t.loanPeriod = loanPeriods.value;
 
       formRef.value.validate(async (valid: boolean) => {
         if (valid) {
@@ -464,19 +464,8 @@ export default defineComponent({
       });
     };
 
-    return {
-      loanRequest,
-      submit,
-      loading,
-      formRef,
-      rules,
-      newTargetModalRef,
-      getAssetPath,
-    };
-  },
-  computed: {
-    paymentTermDays: function () {
-      switch (this.loanRequest.paymentTerm) {
+    const paymentTermDays = computed(() => {
+      switch (loanRequest.value.paymentTerm) {
         case PaymentTerms.biweekly:
           return 14;
         case PaymentTerms.monthly:
@@ -486,23 +475,36 @@ export default defineComponent({
         default:
           return null;
       }
-    },
-    loanPeriods: function () {
-      if (!this.loanRequest.payOffDate || !this.loanRequest.preferredDate || !this.paymentTermDays) {
+    });
+
+    const loanPeriods = computed(() => {
+      if (!loanRequest.value.payOffDate || !loanRequest.value.preferredDate || !paymentTermDays.value) {
         return null;
       } else {
-        const dayDiff = differenceInDays(this.loanRequest.payOffDate, this.loanRequest.preferredDate);
-        return Math.floor(dayDiff / this.paymentTermDays);
+        const dayDiff = differenceInDays(loanRequest.value.payOffDate, loanRequest.value.preferredDate);
+        return Math.floor(dayDiff / paymentTermDays.value);
       }
-    },
-    estimatedInstallment: function () {
-      if (!this.loanPeriods || !this.loanRequest.amount) {
+    });
+
+    const estimatedInstallment = computed(() => {
+      if (!loanPeriods.value || !loanRequest.value.amount) {
         return null;
       } else {
-        return Number(this.loanRequest.amount / this.loanPeriods).toFixed(2);
+        return Number(loanRequest.value.amount / loanPeriods.value).toFixed(2);
       }
-    }
-  }
+    });
+
+    return {
+      loanRequest,
+      submit,
+      loading,
+      formRef,
+      rules,
+      newTargetModalRef,
+      getAssetPath,
+      estimatedInstallment,
+    };
+  },
 });
 </script>
 

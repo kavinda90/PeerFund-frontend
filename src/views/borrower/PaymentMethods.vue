@@ -187,36 +187,6 @@ export default defineComponent({
               <KTIcon icon-name="trash" icon-class="fs-3" />
             </a>
             <!--end::Delete-->
-            <!--begin::More-->
-            <a
-                href="#"
-                class="btn btn-icon btn-active-light-primary w-30px h-30px"
-                data-bs-toggle="tooltip"
-                title=""
-                data-kt-menu-trigger="click"
-                data-kt-menu-placement="bottom-end"
-                data-bs-original-title="More Options"
-            >
-              <KTIcon icon-name="switch" icon-class="fs-3" />
-            </a>
-            <!--begin::Menu-->
-            <div
-                class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semobold w-150px py-3"
-                data-kt-menu="true"
-            >
-              <!--begin::Menu item-->
-              <div class="menu-item px-3">
-                <a
-                    href="#"
-                    class="menu-link px-3"
-                    data-kt-payment-mehtod-action="set_as_primary"
-                >Set as Primary</a
-                >
-              </div>
-              <!--end::Menu item-->
-            </div>
-            <!--end::Menu-->
-            <!--end::More-->
           </div>
           <!--end::Toolbar-->
         </div>
@@ -380,36 +350,6 @@ export default defineComponent({
               <KTIcon icon-name="trash" icon-class="fs-3" />
             </a>
             <!--end::Delete-->
-            <!--begin::More-->
-            <a
-                href="#"
-                class="btn btn-icon btn-active-light-primary w-30px h-30px"
-                data-bs-toggle="tooltip"
-                title=""
-                data-kt-menu-trigger="click"
-                data-kt-menu-placement="bottom-end"
-                data-bs-original-title="More Options"
-            >
-              <KTIcon icon-name="switch" icon-class="fs-3" />
-            </a>
-            <!--begin::Menu-->
-            <div
-                class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semobold w-150px py-3"
-                data-kt-menu="true"
-            >
-              <!--begin::Menu item-->
-              <div class="menu-item px-3">
-                <a
-                    href="#"
-                    class="menu-link px-3"
-                    data-kt-payment-mehtod-action="set_as_primary"
-                >Set as Primary</a
-                >
-              </div>
-              <!--end::Menu item-->
-            </div>
-            <!--end::Menu-->
-            <!--end::More-->
           </div>
           <!--end::Toolbar-->
         </div>
@@ -576,36 +516,6 @@ export default defineComponent({
               <KTIcon icon-name="trash" icon-class="fs-3" />
             </a>
             <!--end::Delete-->
-            <!--begin::More-->
-            <a
-                href="#"
-                class="btn btn-icon btn-active-light-primary w-30px h-30px"
-                data-bs-toggle="tooltip"
-                title=""
-                data-kt-menu-trigger="click"
-                data-kt-menu-placement="bottom-end"
-                data-bs-original-title="More Options"
-            >
-              <KTIcon icon-name="switch" icon-class="fs-3" />
-            </a>
-            <!--begin::Menu-->
-            <div
-                class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semobold w-150px py-3"
-                data-kt-menu="true"
-            >
-              <!--begin::Menu item-->
-              <div class="menu-item px-3">
-                <a
-                    href="#"
-                    class="menu-link px-3"
-                    data-kt-payment-mehtod-action="set_as_primary"
-                >Set as Primary</a
-                >
-              </div>
-              <!--end::Menu item-->
-            </div>
-            <!--end::Menu-->
-            <!--end::More-->
           </div>
           <!--end::Toolbar-->
         </div>

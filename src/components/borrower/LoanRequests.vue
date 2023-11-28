@@ -69,9 +69,9 @@
                 <!--begin::Table head-->
                 <thead>
                   <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
-                    <th class="p-0 pb-3 min-w-150px text-start">Lender</th>
-                    <th class="p-0 pb-3 min-w-100px text-end pe-13">CONV.</th>
-                    <th class="p-0 pb-3 text-end pe-7">Status</th>
+                    <th class="p-0 pb-3 min-w-150px text-start">Loan request id</th>
+                    <th class="p-0 pb-3 min-w-100px text-end pe-13">Amount</th>
+                    <th class="p-0 pb-3 text-start ps-10 pe-7">Requested date</th>
                     <th class="p-0 pb-3 text-end">Details</th>
                   </tr>
                 </thead>
@@ -83,52 +83,18 @@
                     <tr>
                       <td>
                         <div class="d-flex align-items-center">
-                          <div class="symbol symbol-50px me-3">
-                            <img :src="row.agent.avatar" class="" alt="" />
-                          </div>
-
                           <div class="d-flex justify-content-start flex-column">
-                            <router-link
-                              to="/crafted/pages/profile/overview"
-                              class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6"
-                              >{{ row.agent.name }}</router-link
-                            >
-                            <span
-                              class="text-gray-400 fw-semibold d-block fs-7"
-                              >{{ row.agent.city }}</span
-                            >
+                            <span class="fw-bold text-gray-800 mb-1 fs-6">{{ row.loanId }}</span>
                           </div>
                         </div>
                       </td>
 
                       <td class="text-end pe-13">
-                        <span class="text-gray-600 fw-bold fs-6"
-                          >{{ row.price }}%</span
-                        >
+                        <span class="text-gray-600 fs-6">${{ row.amount }}</span>
                       </td>
 
-                      <td class="text-end pe-0">
-                        <!--begin::Label-->
-                        <span
-                          v-if="row.icon"
-                          class="badge badge-light-success fs-base"
-                        >
-                          <KTIcon
-                            icon-name="arrow-up"
-                            icon-class="fs-5 text-success ms-n1"
-                          />
-                          {{ row.statistics }} %
-                        </span>
-                        <!--end::Label-->
-                        <!--begin::Label-->
-                        <span v-else class="badge badge-light-danger fs-base">
-                          <KTIcon
-                            icon-name="arrow-down"
-                            icon-class="fs-5 text-danger ms-n1"
-                          />
-                          {{ row.statistics }} %
-                        </span>
-                        <!--end::Label-->
+                      <td class="text-start ps-10">
+                        <span class="text-gray-600 fs-6">{{ row.date }}</span>
                       </td>
 
                       <td class="text-end">

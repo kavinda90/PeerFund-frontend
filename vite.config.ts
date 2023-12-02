@@ -6,6 +6,7 @@ import vue from "@vitejs/plugin-vue";import dns from 'dns'
 dns.setDefaultResultOrder('verbatim')
 
 // https://vitejs.dev/config/
+/// <reference types="vitest" />
 export default defineConfig(({ command, mode }) => {
 
   const env = loadEnv(mode, process.cwd(), '')
@@ -23,6 +24,10 @@ export default defineConfig(({ command, mode }) => {
     build: {
       chunkSizeWarningLimit: 3000,
     },
+    test:{
+      globals:true,
+      environment: 'happy-dom',
+    }
   }
   
 });

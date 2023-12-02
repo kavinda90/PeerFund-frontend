@@ -12,7 +12,7 @@
       <!--begin::Heading-->
       <div class="mb-10 text-center">
         <!--begin::Title-->
-        <h1 class="text-dark mb-3">Sign Up as an Investor</h1>
+        <h1 class="text-dark mb-3">Sign Up as a {{ options[selectedOption].title }}</h1>
         <!--end::Title-->
 
         <!--begin::Link-->
@@ -24,6 +24,8 @@
           </router-link>
         </div>
         <!--end::Link-->
+
+        
       </div>
       <!--end::Heading-->
 
@@ -34,7 +36,45 @@
       </div>
       <!--end::Separator-->
 
-      <div v-show="step === 1">
+      <div>
+        <div class="row fv-row">
+          <ul class="nav nav-pills nav-pills-custom mb-10 justify-content-center">
+            <template v-for="(item, i) in options" :key="i">
+              <!--begin::Item-->
+              <li class="nav-item mb-3 me-3 me-lg-6">
+                <!--begin::Link-->
+                <a
+                  class="nav-link btn btn-outline btn-flex btn-color-muted btn-active-color-primary flex-row overflow-hidden w-150px h-85px pt-2 pb-2 justify-content-center align-items-center"
+                  :class="[i === selectedOption && 'active']"
+                  :id="`kt_stats_widget_16_tab_link_${i}`"
+                  data-bs-toggle="pill"
+                  :href="`#kt_stats_widget_16_tab_${i}`"
+                  @click="handleNavLinkClick(i)"
+                >
+                  <!--begin::Icon-->
+                  <div class="nav-icon me-3">
+                    <KTIcon :icon-name="item.icon" icon-class="fs-1 p-0" />
+                  </div>
+                  <!--end::Icon-->
+
+                  <!--begin::Title-->
+                  <span class="nav-text text-gray-800 fw-bold fs-6 lh-1">
+                    {{ item.title }}
+                  </span>
+                  <!--end::Title-->
+
+                  <!--begin::Bullet-->
+                  <span
+                    class="bullet-custom position-absolute bottom-0 w-100 h-4px bg-primary"
+                  ></span>
+                  <!--end::Bullet-->
+                </a>
+                <!--end::Link-->
+              </li>
+              <!--end::Item-->
+            </template>
+          </ul>
+        </div>
         <!--begin::Input group-->
         <div class="row fv-row mb-7">
           <!--begin::Col-->
@@ -272,19 +312,10 @@
       <!--begin::Actions-->
       <div class="text-center">
         <button
-          class="btn btn-lg btn-primary"
-          type="button"
-          v-on:click="nextStep"
-          v-show="step !== 2"
-        >
-          <span class="indicator-label"> Continue </span>
-        </button>
-        <button
           id="kt_sign_up_submit"
           ref="submitButton"
           type="submit"
           class="btn btn-lg btn-primary"
-          v-show="step === 2"
         >
           <span class="indicator-label"> Submit </span>
           <span class="indicator-progress">
@@ -330,6 +361,26 @@ export default defineComponent({
 
     const submitButton = ref<HTMLButtonElement | null>(null);
 
+    const options = [
+      {
+        title: "Investor",
+        icon: "bank",
+        index: "1"
+      },
+      {
+        title: "Borrower",
+        icon: "security-user",
+        index: "2"
+      }
+    ];
+
+    const selectedOption = ref(0); // Initialize with the default option
+
+    // Define a method to handle nav-link clicks and update selectedOption
+    const handleNavLinkClick = (index: number) => {
+      selectedOption.value = index;
+    };
+
     const registration = Yup.object().shape({
       first_name: Yup.string().required().label("First name"),
       last_name: Yup.string().required().label("Last name"),
@@ -343,15 +394,6 @@ export default defineComponent({
         .label("Password Confirmation"),
     });
 
-    const nextStep = () => {
-      step.value += 1;
-      console.log('stepp ', step.value);
-    }
-
-    const backStep = () => {
-      step.value -= 1;
-    }
-
     onMounted(() => {
       nextTick(() => {
         PasswordMeterComponent.bootstrap();
@@ -360,6 +402,7 @@ export default defineComponent({
 
     const onSubmitRegister = async (values: any) => {
       values.dob = format(dateOfBirth.value, 'yyyy-MM-dd');
+      values.user_type = (selectedOption.value == 0) ? 'investor' : 'borrower';
       values = values as User;
       console.log(values);
 
@@ -389,7 +432,7 @@ export default defineComponent({
           },
         }).then(function () {
           // Go to page after successfully login
-          router.push({ name: "dashboard" });
+          router.push({ name: "sign-in" });
         });
       } else {
         Swal.fire({
@@ -415,8 +458,10 @@ export default defineComponent({
       submitButton,
       getAssetPath,
       step,
-      nextStep,
       dateOfBirth,
+      options,
+      selectedOption,
+      handleNavLinkClick
     };
   },
 });

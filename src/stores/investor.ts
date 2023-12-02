@@ -1,8 +1,8 @@
-import { ref } from "vue";
-import { defineStore } from "pinia";
+import {ref} from "vue";
+import {defineStore} from "pinia";
 import ApiService from "@/core/services/ApiService";
 import JwtService from "@/core/services/JwtService";
-import type { Investment, InvestorAccount, LoanRequest } from "@/core/services/Models";
+import type { Investment, InvestorAccount, LoanRequest, Loan } from "@/core/services/Models";
 
 export const useInvestorStore = defineStore("investorStore", () => {
     const errors = ref({});
@@ -90,7 +90,7 @@ export const useInvestorStore = defineStore("investorStore", () => {
         getInvestmentsByInvestor,
         portfolio
     };
-    
+
 
 });
 

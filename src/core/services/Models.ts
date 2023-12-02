@@ -1,3 +1,5 @@
+import type {Notifications, PaymentTerms, Purposes} from "@/core/utils/enums";
+import type {NullableSting} from "@/core/utils/types";
 
 export type User = {
     id: number;
@@ -58,7 +60,7 @@ export type Investment = {
     transaction_info: string;
     createdAt: string;
     investor_account: InvestorAccount;
-    loan_request: LoanRequest;
+    loan_request: Loan;
 };
 
 export type InvestorWithdrawal = {
@@ -70,7 +72,7 @@ export type InvestorWithdrawal = {
     investor_account: InvestorAccount;
 };
 
-export type LoanRequest = {
+export type Loan = {
     id: number,
     amount: number;
     expiry_date: string;
@@ -96,7 +98,7 @@ export type LoanPayment = {
     paid_at: string;
     payment_info: string;
     createdAt: string;
-    loan_request: LoanRequest;
+    loan_request: Loan;
 
 };
 
@@ -138,3 +140,16 @@ export type InvestmentItem = {
     term: string;
 }
 
+export interface LoanRequest {
+    accountId: number;
+    amount: number;
+    preferredDate: Date;
+    purpose: Purposes | "";
+    description: NullableSting,
+    loanPeriod: number;
+    paymentTerm: PaymentTerms | "";
+    isUrgent: any;
+    notifications?: Notifications[];
+    payOffDate?: Date;
+    estimatedInstallment?: number;
+}

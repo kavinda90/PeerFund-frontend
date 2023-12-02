@@ -31,7 +31,7 @@ export interface MenuItem {
         },
         {
             heading: "Transfer Funds",
-            route: "/investor/transfer-funds",
+            route: "/investor/funds",
             keenthemesIcon: "bank",
             bootstrapIcon: "bi-layers",
         },

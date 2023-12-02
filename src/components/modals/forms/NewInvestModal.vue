@@ -2,7 +2,7 @@
     <div
       class="modal fade"
       id="kt_modal_new_invest"
-      ref="addCustomerModalRef"
+      ref="newInvestModalRef"
       tabindex="-1"
       aria-hidden="true"
     >
@@ -13,14 +13,14 @@
           <!--begin::Modal header-->
           <div class="modal-header" id="kt_modal_add_customer_header">
             <!--begin::Modal title-->
-            <h2 class="fw-bold">Add a Customer</h2>
+            <h2 class="fw-bold">New Investment - Loan Id - {{ loanData?.loanId }}</h2>
             <!--end::Modal title-->
   
             <!--begin::Close-->
             <div
               id="kt_modal_add_customer_close"
-              data-bs-dismiss="modal"
               class="btn btn-icon btn-sm btn-active-icon-primary"
+              @click="closeModal"
             >
               <KTIcon icon-name="cross" icon-class="fs-1" />
             </div>
@@ -47,239 +47,103 @@
                 data-kt-scroll-wrappers="#kt_modal_add_customer_scroll"
                 data-kt-scroll-offset="300px"
               >
-                <!--begin::Input group-->
-                <div class="fv-row mb-7">
-                  <!--begin::Label-->
-                  <label class="required fs-6 fw-semobold mb-2">Name</label>
-                  <!--end::Label-->
-  
-                  <!--begin::Input-->
-                  <el-form-item prop="name">
-                    <el-input
-                      v-model="formData.name"
-                      type="text"
-                      placeholder=""
-                    />
-                  </el-form-item>
-                  <!--end::Input-->
-                </div>
-                <!--end::Input group-->
-  
-                <!--begin::Input group-->
-                <div class="fv-row mb-7">
-                  <!--begin::Label-->
-                  <label class="fs-6 fw-semobold mb-2">
-                    <span class="required">Email</span>
-  
-                    <i
-                      class="fas fa-exclamation-circle ms-1 fs-7"
-                      data-bs-toggle="tooltip"
-                      title="Email address must be active"
-                    ></i>
-                  </label>
-                  <!--end::Label-->
-  
-                  <!--begin::Input-->
-                  <el-form-item prop="email">
-                    <el-input v-model="formData.email" />
-                  </el-form-item>
-                  <!--end::Input-->
-                </div>
-                <!--end::Input group-->
-  
-                <!--begin::Input group-->
-                <div class="fv-row mb-15">
-                  <!--begin::Label-->
-                  <label class="fs-6 fw-semobold mb-2">Description</label>
-                  <!--end::Label-->
-  
-                  <!--begin::Input-->
-                  <el-form-item prop="description">
-                    <el-input v-model="formData.description" type="text" />
-                  </el-form-item>
-                  <!--end::Input-->
-                </div>
-                <!--end::Input group-->
-  
-                <!--begin::Billing toggle-->
-                <div
-                  class="fw-bold fs-3 rotate collapsible mb-7"
-                  data-bs-toggle="collapse"
-                  href="#kt_modal_add_customer_billing_info"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="kt_customer_view_details"
-                >
-                  Shipping Information
-                  <span class="ms-2 rotate-180">
-                    <KTIcon icon-name="down" icon-class="fs-3" />
-                  </span>
-                </div>
-                <!--end::Billing toggle-->
-  
-                <!--begin::Billing form-->
-                <div
-                  id="kt_modal_add_customer_billing_info"
-                  class="collapse show"
-                >
-                  <!--begin::Input group-->
-                  <div class="d-flex flex-column mb-7 fv-row">
-                    <!--begin::Label-->
-                    <label class="required fs-6 fw-semobold mb-2"
-                      >Address Line 1</label
-                    >
-                    <!--end::Label-->
-  
-                    <!--begin::Input-->
-                    <el-form-item prop="addressLine">
-                      <el-input v-model="formData.addressLine" />
-                    </el-form-item>
-                    <!--end::Input-->
+                <div class="row mb-7">
+                  <div class="col-6">
+                    <h5>Purpose</h5>
+                    <h6 class="text-muted">{{ loanData?.purpose.toUpperCase() }}</h6>
                   </div>
-                  <!--end::Input group-->
-  
-                  <!--begin::Input group-->
-                  <div class="d-flex flex-column mb-7 fv-row">
-                    <!--begin::Label-->
-                    <label class="fs-6 fw-semobold mb-2">Address Line 2</label>
-                    <!--end::Label-->
-  
-                    <!--begin::Input-->
-                    <el-input v-model="formData.addressLine2" />
-                    <!--end::Input-->
+                  <div class="col-6">
+                    <h5>Grade</h5>
+                    <h6 class="text-muted">{{ loanData?.grade.value }}</h6>
                   </div>
-                  <!--end::Input group-->
-  
-                  <!--begin::Input group-->
-                  <div class="d-flex flex-column mb-7 fv-row">
-                    <!--begin::Label-->
-                    <label class="required fs-6 fw-semobold mb-2">Town</label>
-                    <!--end::Label-->
-  
-                    <!--begin::Input-->
-                    <el-form-item prop="town">
-                      <el-input v-model="formData.town" />
-                    </el-form-item>
-                    <!--end::Input-->
+                </div>
+                <div class="row mb-7">
+                  <div class="col-6">
+                    <h5>Amount</h5>
+                    <h6 class="text-muted">{{ loanData?.amount }}</h6>
                   </div>
-                  <!--end::Input group-->
-  
-                  <!--begin::Input group-->
-                  <div class="row g-9 mb-7">
-                    <!--begin::Col-->
-                    <div class="col-md-6 fv-row">
+                  <div class="col-6">
+                    <h5>Term</h5>
+                    <h6 class="text-muted">{{ loanData?.term }}</h6>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-body">
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
                       <!--begin::Label-->
-                      <label class="required fs-6 fw-semobold mb-2"
-                        >State / Province</label
-                      >
+                      <label class="required fs-6 fw-semobold mb-2">Your Interest Rate (%)</label>
                       <!--end::Label-->
-  
+      
                       <!--begin::Input-->
-                      <el-form-item prop="state">
-                        <el-input v-model="formData.state" />
-                      </el-form-item>
-                      <!--end::Input-->
-                    </div>
-                    <!--end::Col-->
-  
-                    <!--begin::Col-->
-                    <div class="col-md-6 fv-row">
-                      <!--begin::Label-->
-                      <label class="required fs-6 fw-semobold mb-2"
-                        >Post Code</label
-                      >
-                      <!--end::Label-->
-  
-                      <!--begin::Input-->
-                      <el-form-item prop="postCode">
-                        <el-input v-model="formData.postCode" />
-                      </el-form-item>
-                      <!--end::Input-->
-                    </div>
-                    <!--end::Col-->
-                  </div>
-                  <!--end::Input group-->
-  
-                  <!--begin::Input group-->
-                  <div class="d-flex flex-column mb-7 fv-row">
-                    <!--begin::Label-->
-                    <label class="fs-6 fw-semobold mb-2">
-                      <span class="required">Country</span>
-  
-                      <i
-                        class="fas fa-exclamation-circle ms-1 fs-7"
-                        data-bs-toggle="tooltip"
-                        title="Country of origination"
-                      ></i>
-                    </label>
-                    <!--end::Label-->
-  
-                    <!--begin::Input-->
-                    <el-select v-model="formData.country">
-                      <el-option value="">Select a Country...</el-option>
-                      <el-option
-                        v-for="(item, i) in countries"
-                        :key="`countries-select-option-${i}`"
-                        :value="item.code"
-                      >
-                        {{ item.name }}
-                      </el-option>
-                    </el-select>
-                    <!--end::Input-->
-                  </div>
-                  <!--end::Input group-->
-  
-                  <!--begin::Input group-->
-                  <div class="fv-row mb-7">
-                    <!--begin::Wrapper-->
-                    <div class="d-flex flex-stack">
-                      <!--begin::Label-->
-                      <div class="me-5">
-                        <!--begin::Label-->
-                        <label class="fs-6 fw-semobold"
-                          >Use as a billing adderess?</label
-                        >
-                        <!--end::Label-->
-  
-                        <!--begin::Input-->
-                        <div class="fs-7 fw-semobold text-muted">
-                          If you need more info, please check budget planning
-                        </div>
-                        <!--end::Input-->
-                      </div>
-                      <!--end::Label-->
-  
-                      <!--begin::Switch-->
-                      <label
-                        class="form-check form-switch form-check-custom form-check-solid"
-                      >
-                        <!--begin::Input-->
-                        <input
-                          class="form-check-input"
-                          name="billing"
-                          type="checkbox"
-                          value="1"
-                          id="kt_modal_add_customer_billing"
-                          checked
+                      <el-form-item prop="interestRate">
+                        <el-input-number
+                          v-model="formData.interestRate"
+                          placeholder=""
+                          @keyup="onPressRate"
+                          :step="0.01"
                         />
-                        <!--end::Input-->
-  
-                        <!--begin::Label-->
-                        <span
-                          class="form-check-label fw-semobold text-muted"
-                          for="kt_modal_add_customer_billing"
-                        >
-                          Yes
-                        </span>
-                        <!--end::Label-->
-                      </label>
-                      <!--end::Switch-->
+                      </el-form-item>
+                      <!--end::Input-->
                     </div>
-                    <!--begin::Wrapper-->
+                    <!--end::Input group-->
+      
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                      <!--begin::Label-->
+                      <label class="fs-6 fw-semobold mb-2">
+                        Monthly Payment
+                      </label>
+                      <!--end::Label-->
+                      <h2>$ {{ monthlyPayment }}</h2>
+      
+                      <!--begin::Input-->
+                      <!-- <el-form-item>
+                        <el-input type="number" v-model="monthlyPayment" disabled />
+                      </el-form-item> -->
+                      <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                      <!--begin::Label-->
+                      <label class="fs-6 fw-semobold mb-2">
+                        Total Payment
+                      </label>
+                      <!--end::Label-->
+                      <h2>$ {{ totalPayment }}</h2>
+      
+                      <!--begin::Input-->
+                      <!-- <el-form-item>
+                        <el-input type="number" v-model="totalPayment" disabled />
+                      </el-form-item> -->
+                      <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                      <!--begin::Label-->
+                      <label class="fs-6 fw-semobold mb-2">
+                        Total Interest
+                      </label>
+                      <!--end::Label-->
+                      <h2>$ {{ totalInterest }}</h2>
+      
+                      <!--begin::Input-->
+                      <!-- <el-form-item>
+                        <el-input type="number" v-model="totalInterest" disabled />
+                      </el-form-item> -->
+                      <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+      
+                    
                   </div>
-                  <!--end::Input group-->
+                  
                 </div>
-                <!--end::Billing form-->
+                
               </div>
               <!--end::Scroll-->
             </div>
@@ -289,9 +153,10 @@
             <div class="modal-footer flex-center">
               <!--begin::Button-->
               <button
-                type="reset"
+                type="button"
                 id="kt_modal_add_customer_cancel"
                 class="btn btn-light me-3"
+                @click="closeModal"
               >
                 Discard
               </button>
@@ -326,87 +191,110 @@
   
   <script lang="ts">
   import { getAssetPath } from "@/core/helpers/assets";
-  import { defineComponent, ref } from "vue";
+  import { defineComponent, onMounted, ref, type PropType } from "vue";
   import { hideModal } from "@/core/helpers/dom";
   import { countries } from "@/core/data/countries";
   import Swal from "sweetalert2/dist/sweetalert2.js";
+  import type { LoanItem } from "@/core/services/Models";
+  import {onClickOutside} from '@vueuse/core'
+  import { useInvestorStore } from "@/stores/investor";
+  import { useAuthStore } from "@/stores/auth";
   
   export default defineComponent({
     name: "add-customer-modal",
     components: {},
-    setup() {
+    props: {
+      loanData: {} as LoanItem
+    },
+    setup(props, {emit}) {
+      console.log('ropss', props);
       const formRef = ref<null | HTMLFormElement>(null);
-      const addCustomerModalRef = ref<null | HTMLElement>(null);
+      const newInvestModalRef = ref<null | HTMLElement>(null);
       const loading = ref<boolean>(false);
+      const store = useInvestorStore();
+      const authStore = useAuthStore();
       const formData = ref({
-        name: "Sean Bean",
-        email: "sean@dellito.com",
-        description: "",
-        addressLine: "101, Collins Street",
-        addressLine2: "",
-        town: "Melbourne",
-        state: "Victoria",
-        postCode: "3000",
-        country: "US",
+        loanId: "",
+        interestRate: "",
+        investorId: "",
       });
+      let monthlyPayment = ref<number>(0);
+      let totalInterest = ref<number>(0);
+      let totalPayment = ref<number>(0);
+
+      onMounted(() => {
+        store.getAccount(authStore.user.id.toString());
+      })
   
       const rules = ref({
-        name: [
+        interestRate: [
           {
             required: true,
-            message: "Customer name is required",
+            message: "Interest rate is required",
             trigger: "change",
+            // ty
           },
         ],
-        email: [
-          {
-            required: true,
-            message: "Customer email is required",
-            trigger: "change",
-          },
-        ],
-        addressLine: [
-          {
-            required: true,
-            message: "Address 1 is required",
-            trigger: "change",
-          },
-        ],
-        town: [
-          {
-            required: true,
-            message: "Town is required",
-            trigger: "change",
-          },
-        ],
-        state: [
-          {
-            required: true,
-            message: "State is required",
-            trigger: "change",
-          },
-        ],
-        postCode: [
-          {
-            required: true,
-            message: "Post code is required",
-            trigger: "change",
-          },
-        ],
+        
       });
+
+      const resetValues = () => {
+        formData.value.loanId = '';
+        formData.value.interestRate = '';
+        formData.value.investorId = '';
+        monthlyPayment.value = 0;
+        totalInterest.value = 0;
+        totalPayment.value = 0;
+      }
+
+      const onPressRate = (e) =>{
+        const amount = parseFloat(props?.loanData?.amount.substring(1));
+        const terms = parseInt(props?.loanData?.term.split(" ")[0]);
+        const rate = parseFloat(e.target.value);
+        console.log(amount + ' - ' + rate);
+        monthlyPayment.value = parseFloat(calculateMonthlyPayment(amount, rate, terms)).toFixed(2);
+        totalPayment.value = (monthlyPayment.value * terms).toFixed(2);
+        totalInterest.value = (totalPayment.value - amount).toFixed(2);
+
+      }
+
+      const calculateMonthlyPayment = (principal, annualInterestRate, loanTermInMonths) => {
+        // Convert annual interest rate to monthly and express as a decimal
+        const monthlyInterestRate = annualInterestRate / 12 / 100;
+
+        // Calculate the monthly payment using the formula
+        const monthlyPayment =
+          (principal * monthlyInterestRate) /
+          (1 - Math.pow(1 + monthlyInterestRate, -loanTermInMonths));
+
+        return monthlyPayment.toFixed(2); // Round to two decimal places
+      }
+
+      const closeModal = () => {
+        resetValues();
+        hideModal(newInvestModalRef.value);
+      }
+
+      onClickOutside(newInvestModalRef, () => closeModal());
   
       const submit = () => {
         if (!formRef.value) {
           return;
         }
   
-        formRef.value.validate((valid: boolean) => {
+        formRef.value.validate(async (valid: boolean) => {
           if (valid) {
             loading.value = true;
-  
-            setTimeout(() => {
+
+            formData.value.loanId = props.loanData?.loanId;
+            formData.value.investorId = store.investor.id.toString();
+
+            await store.submitInvestment(formData.value);
+
+            const error = Object.values(store.errors);
+
+            if(!error[0]) {
               loading.value = false;
-  
               Swal.fire({
                 text: "Form has been successfully submitted!",
                 icon: "success",
@@ -417,9 +305,21 @@
                   confirmButton: "btn btn-primary",
                 },
               }).then(() => {
-                hideModal(addCustomerModalRef.value);
+                hideModal(newInvestModalRef.value);
+                emit('modal-closed');
               });
-            }, 2000);
+            } else {
+              Swal.fire({
+                text: error[0] as string,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Try again!",
+                heightAuto: false,
+                customClass: {
+                  confirmButton: "btn fw-semobold btn-light-danger",
+                },
+              });
+            }
           } else {
             Swal.fire({
               text: "Sorry, looks like there are some errors detected, please try again.",
@@ -442,9 +342,14 @@
         submit,
         formRef,
         loading,
-        addCustomerModalRef,
+        newInvestModalRef,
         getAssetPath,
         countries,
+        onPressRate,
+        monthlyPayment,
+        totalInterest,
+        totalPayment,
+        closeModal,
       };
     },
   });

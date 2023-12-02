@@ -46,6 +46,9 @@ export type InvestorAccount = {
     status: string;
     createdAt: string;
     user: User;
+    investments: Investment[];
+    investor_withdrawals: InvestorWithdrawal[];
+    subscription_payments: SubscriptionPayment[];
 };
 
 export type Investment = {
@@ -76,10 +79,11 @@ export type LoanRequest = {
     loan_period: number;
     payment_term: string;
     status: string;
-    investment: Investment;
+    investment_id: string;
+    investments: Investment[];
     term_amount: number;
     assesment_fee: number;
-    transaction_fee: number;
+    transaction_info: string;
     createdAt: string;
     borrower_account: BorrowerAccount;
 };
@@ -106,4 +110,31 @@ export type SubscriptionPayment = {
     createdAt: string;
     investor_account: InvestorAccount;
 };
+
+export type LoanItem = {
+    loanId: number;
+    grade: {
+        color: string;
+        value: string;
+    };
+    purpose: string;
+    amount: string;
+    term: string;
+    status: {
+        label: string;
+        color: string;
+    };
+}
+
+export type InvestmentItem = {
+    investmentId: number;
+    loanId: number;
+    grade: {
+        color: string;
+        value: string;
+    };
+    purpose: string;
+    amount: string;
+    term: string;
+}
 

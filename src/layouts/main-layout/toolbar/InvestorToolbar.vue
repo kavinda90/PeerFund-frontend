@@ -14,17 +14,17 @@
         <!--begin::Actions-->
         <div class="d-flex align-items-center gap-2 gap-lg-3">
           <!--begin::Secondary button-->
-          <a
-            href="#"
+          <router-link
+            to="/investor/funds"
             class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary"
-            >Fund Account</a
+            >Fund Account</router-link
           >
           <!--end::Secondary button-->
           <!--begin::Primary button-->
-          <a
-            href="#"
+          <router-link
+            to="/investor/invest"
             class="btn btn-sm fw-bold btn-primary"
-            >Invest</a
+            >Invest</router-link
           >
           <!-- <RouterLink to="/investor/invest">
             <a

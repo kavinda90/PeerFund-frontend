@@ -89,9 +89,9 @@
                 <template v-slot:actions="{ row: loan }">
                     <button  
                         type="button"
-                        class="btn btn-light-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#kt_modal_new_invest"
+                        :class="'btn btn-light-' + (loan.invested ? 'secondary' : 'primary')"
+                        @click="showInvest(loan)"
+                        :disabled="loan.invested"
                         >Invest
                     </button>
                 </template>
@@ -100,17 +100,20 @@
         <!--begin::Body-->
     </div>
     <!--end::Tables Widget 13-->
-    <NewInvestModal></NewInvestModal>
+    <NewInvestModal :loanData="selectedItem" @modal-closed="handleModalClosed"></NewInvestModal>
 </template>
 
 <script lang="ts">
 import { getAssetPath } from "@/core/helpers/assets";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onActivated, onMounted, ref } from "vue";
 import { useInvestorStore } from "@/stores/investor";
 import Datatable from "@/components/kt-datatable/KTDataTable.vue";
 import type { Sort } from "@/components/kt-datatable//table-partials/models";
 import arraySort from "array-sort";
 import NewInvestModal from "@/components/modals/forms/NewInvestModal.vue";
+import { Modal } from "bootstrap";
+import type { LoanItem } from "@/core/services/Models";
+import { useAuthStore } from "@/stores/auth";
 
 export default defineComponent({
     name: "kt-widget-12",
@@ -124,15 +127,23 @@ export default defineComponent({
     setup() {
         const checkedRows = ref<Array<number>>([]);
         const store = useInvestorStore();
+        const authStore = useAuthStore();
         const list = ref<LoanItem[]>([]);
         const selectedIds = ref<Array<number>>([]);
         const initLoans = ref<Array<LoanItem>>([]);
         const search = ref<string>("");
+        const selectedItem = ref<LoanItem>();
 
-        onMounted(() => {
+        onMounted(async () => {
+            await store.getAccount(authStore.user.id.toString());
             loadLoans();
             initLoans.value.splice(0, list.value.length, ...list.value);
         });
+
+        const handleModalClosed = () => {
+            // Call the loadLoans function when the modal is closed
+            loadLoans();
+        };
 
         const tableHeader = ref([
             {
@@ -179,23 +190,8 @@ export default defineComponent({
             },
         ]);
 
-        interface LoanItem {
-            loanId: number;
-            grade: {
-                color: string;
-                value: string;
-            };
-            purpose: string;
-            amount: string;
-            term: string;
-            status: {
-                label: string;
-                color: string;
-            };
-        }
-
         const loadLoans = async() => {
-            await store.getActiveLoanRequests();
+            await store.getActiveLoanRequests(store.investor.id.toString());
             list.value = store.loanRequests.map(loan => {
                 return {
                     loanId: loan.id,
@@ -214,35 +210,36 @@ export default defineComponent({
                         color: (loan.status === 'new') ? 'info' :
                             (loan.status === 'approved') ? 'success' :
                             (loan.status === 'completed') ? 'primary' : 'danger',
-                    }
+                    },
+                    invested: loan.investments.length > 0
                 }
             })
         }
 
-        // const searchItems = () => {
-        //     list.value.splice(0, list.value.length, ...initLoans.value);
-        //     if (search.value !== "") {
-        //         let results: Array<LoanItem> = [];
-        //         for (let j = 0; j < list.value.length; j++) {
-        //             if (searchingFunc(list.value[j], search.value)) {
-        //                 results.push(list.value[j]);
-        //             }
-        //         }
-        //         list.value.splice(0, list.value.length, ...results);
-        //     }
-        //     // MenuComponent.reinitialization();
-        // };
+        const searchItems = () => {
+            list.value.splice(0, list.value.length, ...initLoans.value);
+            if (search.value !== "") {
+                let results: Array<LoanItem> = [];
+                for (let j = 0; j < list.value.length; j++) {
+                    if (searchingFunc(list.value[j], search.value)) {
+                        results.push(list.value[j]);
+                    }
+                }
+                list.value.splice(0, list.value.length, ...results);
+            }
+            // MenuComponent.reinitialization();
+        };
 
-        // const searchingFunc = (obj: any, value: string): boolean => {
-        //     for (let key in obj) {
-        //         if (!Number.isInteger(obj[key]) && !(typeof obj[key] === "object")) {
-        //             if (obj[key].indexOf(value) != -1) {
-        //                 return true;
-        //             }
-        //         }
-        //     }
-        //     return false;
-        // };
+        const searchingFunc = (obj: any, value: string): boolean => {
+            for (let key in obj) {
+                if (!Number.isInteger(obj[key]) && !(typeof obj[key] === "object")) {
+                    if (obj[key].indexOf(value) != -1) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
 
         const sort = (sort: Sort) => {
             const reverse: boolean = sort.order === "asc";
@@ -254,16 +251,25 @@ export default defineComponent({
             selectedIds.value = selectedItems;
         };
 
+        const showInvest = (_loan: LoanItem) => {
+            selectedItem.value = _loan;
+            const modal = new Modal(document.getElementById("kt_modal_new_invest"));
+            modal.show();
+        }
+
         return {
             list,
             checkedRows,
             getAssetPath,
             tableHeader,
             search,
-            // searchItems,
+            searchItems,
             selectedIds,
             sort,
             onItemSelect,
+            showInvest,
+            selectedItem,
+            handleModalClosed
         };
     },
 });

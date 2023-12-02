@@ -32,7 +32,7 @@ export const useAuthStore = defineStore("auth", () => {
       const { data } = await ApiService.post("users/login", credentials);
       setAuth(data);
     } catch (error) {
-      setError(error.message);
+      setError(error.response.data);
     }
   }
 
@@ -45,7 +45,7 @@ export const useAuthStore = defineStore("auth", () => {
       const { data } = await ApiService.post("users/sign-up", credentials);
       setAuth(data);
     } catch (error) {
-      setError(error.message);
+      setError(error.response.data);
     }
   }
 
@@ -54,7 +54,7 @@ export const useAuthStore = defineStore("auth", () => {
       await ApiService.post("forgot_password", email);
       setError({});
     } catch (error) {
-      setError(error.message);
+      setError(error.response.data);
     }
   }
 
@@ -73,7 +73,7 @@ export const useAuthStore = defineStore("auth", () => {
       if (error) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        setError(error.message);
+        setError(error.response.data);
       }
   
       // Always purge auth on error

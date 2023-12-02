@@ -52,13 +52,15 @@
   
   <script lang="ts">
   import { getAssetPath } from "@/core/helpers/assets";
-  import { defineComponent } from "vue";
+  import { defineComponent, onMounted } from "vue";
   import Widget1 from "@/components/dashboard-default-widgets/Widget1.vue";
   import Widget2 from "@/components/dashboard-default-widgets/Widget2.vue";
   import Widget3 from "@/components/dashboard-default-widgets/Widget3.vue";
   import Widget4 from "@/components/dashboard-default-widgets/Widget4.vue";
   import Widget6 from "@/components/dashboard-default-widgets/Widget6.vue";
   import Widget7 from "@/components/dashboard-default-widgets/Widget7.vue";
+  import { useInvestorStore } from "@/stores/investor";
+  import { useAuthStore } from "@/stores/auth";
   
   export default defineComponent({
     name: "investor-dashboard",
@@ -71,6 +73,11 @@
       Widget7,
     },
     setup() {
+      const authStore = useAuthStore();
+      const investStore = useInvestorStore();
+      onMounted(() => {
+        investStore.getAccount(authStore.user.id.toString());
+      })
       return {
         getAssetPath,
       };

@@ -52,7 +52,7 @@
         <h1
           class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7"
         >
-          Fast, Efficient and Productive
+          Invest. Borrow. Thrive
         </h1>
         <!--end::Title-->
 

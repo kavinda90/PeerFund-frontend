@@ -342,9 +342,10 @@ export default defineComponent({
     const loading = ref<boolean>(false);
     const tomorrow = addDays(new Date(), 1);
     const user = useAuthStore().user;
+    console.log('userrrr', user);
     const loanRequest = ref<LoanRequest>({
       amount: 0.0,
-      accountId: user.id,
+      accountId: user.borrower_account.id,
       preferredDate: tomorrow,
       description: null,
       loanPeriod: -1,

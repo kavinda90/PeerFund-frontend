@@ -13,6 +13,8 @@ export type User = {
     phone: string;
     image_path: string;
     payment_method: string;
+    investor_account: InvestorAccount,
+    borrower_account: BorrowerAccount
 };
 
 export type UserDocument = {
